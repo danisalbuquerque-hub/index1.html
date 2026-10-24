@@ -6,6 +6,7 @@
 <title>Jacutinga — Painel de Tramitações</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="config.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 <style>
 :root{
@@ -104,6 +105,48 @@ footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;font-size:12px;co
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){ }
 }
+.acoes{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+.whats-btn{display:inline-block;background:#25D366;color:#fff;font-weight:700;font-size:12.5px;padding:8px 16px;border-radius:20px;text-decoration:none;white-space:nowrap;}
+.whats-btn:hover{opacity:.85;}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--papel:#F2ECE0;--sombra:4px 4px 0 var(--tinta);}
+body{background:var(--papel);}
+h1,h2,h3,.tab,.kpi b{font-family:'Archivo',sans-serif;}
+.trilha{font-family:'Space Mono',monospace;font-size:12px;color:#6b6450;margin-bottom:6px;}
+.secao-titulo{font-size:clamp(26px,4vw,38px);font-weight:900;text-transform:lowercase;letter-spacing:-.03em;line-height:1;margin:0 0 8px;}
+.secao-titulo::after{content:"_";color:var(--vermelho);}
+.secao-sub{font-size:14px;max-width:62ch;}
+main{padding-top:36px;}
+section{margin-bottom:56px;}
+.tabs{position:sticky;top:0;z-index:20;max-width:none;background:var(--tinta);border-bottom:0;gap:8px;padding:10px max(24px,calc((100% - 1100px)/2 + 24px));}
+.tab{border:2px solid var(--branco);border-radius:999px;color:var(--branco);background:transparent;font-size:14px;font-weight:800;padding:10px 6px;}
+.tab.ativo{background:var(--mostarda);color:var(--tinta);border-color:var(--mostarda);}
+.como{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:0 auto;padding:32px 24px 0;}
+.como div{border-top:3px solid var(--tinta);padding-top:10px;}
+.como b{font-family:'Space Mono',monospace;color:var(--vermelho);font-size:13px;}
+.como h3{font-size:20px;font-weight:900;text-transform:lowercase;margin:4px 0;}
+.como p{font-size:13.5px;line-height:1.45;margin:0;color:#4a463b;}
+.rcard,.votacao-card,.noticia-card,.kpi,table{border:2px solid var(--tinta);border-radius:8px;box-shadow:var(--sombra);}
+.rcard{border-left:8px solid var(--vermelho);}
+.votacao-card{border-left:8px solid var(--mostarda);}
+.rcard:hover,.noticia-card:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--tinta);}
+.rcard .tag{background:transparent;border:2px solid var(--vermelho);border-radius:4px;transform:rotate(-2deg);font-family:'Space Mono',monospace;text-transform:uppercase;}
+.kpi{text-align:left;padding:18px;}
+.kpi b{font-size:clamp(34px,6vw,56px);font-weight:900;color:var(--mostarda);letter-spacing:-.03em;}
+.kpi.vermelho b{color:var(--branco);}
+.kpi span{font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;}
+.kpi.selecionado{outline:3px solid var(--mostarda);}
+.chip,.chip-mini{border:2px solid var(--tinta);border-radius:6px;font-family:'Space Mono',monospace;font-size:12px;}
+.chip.ativo,.chip:hover,.chip-mini.ativo{background:var(--mostarda);color:var(--tinta);box-shadow:2px 2px 0 var(--tinta);}
+.votar-btn,.whats-btn{border:2px solid var(--tinta);border-radius:6px;box-shadow:2px 2px 0 var(--tinta);}
+.whats-btn{color:var(--tinta);}
+.busca{border:2px solid var(--tinta);border-radius:6px;}
+thead th{background:var(--tinta);color:var(--mostarda);font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.03em;}
+footer{background:var(--tinta);color:#e9e2cf;max-width:none;margin:0;padding:36px max(24px,calc((100% - 1100px)/2 + 24px));font-size:13px;line-height:1.6;}
+footer h4{font-family:'Archivo',sans-serif;font-weight:900;font-size:22px;color:var(--mostarda);text-transform:lowercase;margin:0 0 8px;}
+@media(max-width:640px){.como{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -118,13 +161,19 @@ footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;font-size:12px;co
   <button class="tab" id="tabDOU" onclick="mudarAba('dou')">📰 Diário Oficial</button>
   <button class="tab" id="tabNoticias" onclick="mudarAba('noticias')">🗞️ Notícias</button>
 </nav>
+<div class="como">
+  <div><b>01</b><h3>a gente monitora</h3><p>Câmara, Senado, e-Cidadania e imprensa, todo dia, nos temas do jacutinga.</p></div>
+  <div><b>02</b><h3>a gente destaca</h3><p>O que voltou a mexer aparece primeiro. Projeto antigo que segue ativo não some do radar.</p></div>
+  <div><b>03</b><h3>você age</h3><p>Vote nas consultas abertas e mande o link para a sua rede no WhatsApp.</p></div>
+</div>
+
 
 <main>
   <div class="aviso" id="aviso"></div>
 
   <div id="abaLeis">
     <section>
-      <h2 class="secao-titulo">🔴 Voltaram a mexer</h2>
+      <div class="trilha">/radar</div><h2 class="secao-titulo">voltaram a mexer</h2>
       <p class="secao-sub">O que teve movimentação nos últimos dias — o sinal de que algo pode estar entrando em pauta.</p>
       <div class="radar" id="radar"></div>
     </section>
@@ -132,7 +181,7 @@ footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;font-size:12px;co
     <div class="kpis" id="kpis"></div>
 
     <section>
-      <h2 class="secao-titulo">Todos os projetos ativos</h2>
+      <div class="trilha">/projetos-ativos</div><h2 class="secao-titulo">todos os projetos ativos</h2>
       <p class="secao-sub">Inclui projetos antigos que continuam tramitando — não somem do radar só porque são de anos anteriores.</p>
       <div class="filtros" id="filtros"></div>
       <input class="busca" id="busca" placeholder="Buscar por número, ementa ou autor...">
@@ -154,7 +203,7 @@ footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;font-size:12px;co
 
   <div id="abaConsultas" style="display:none;">
     <section>
-      <h2 class="secao-titulo">🗳️ Votação popular aberta — vote agora</h2>
+      <div class="trilha">/consultas-abertas</div><h2 class="secao-titulo">vote agora</h2>
       <p class="secao-sub">Consultas do e-Cidadania (Senado) sobre nossos temas, abertas para qualquer cidadão votar sim ou não.</p>
       <div class="filtros-mini" id="filtrosVotacao"></div>
       <div class="votacao-grid" id="votacaoPopular"></div>
@@ -163,7 +212,7 @@ footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;font-size:12px;co
 
   <div id="abaDOU" style="display:none;">
     <section>
-      <h2 class="secao-titulo">📰 Publicações no Diário Oficial</h2>
+      <div class="trilha">/diario-oficial</div><h2 class="secao-titulo">diário oficial</h2>
       <p class="secao-sub">Via Google Alertas, monitorando o site in.gov.br pelos nossos temas (cobertura parcial — depende do que o Google indexa).</p>
       <div class="filtros-mini" id="filtrosDOU"></div>
       <div class="votacao-grid" id="noticiasDOU"></div>
@@ -172,8 +221,8 @@ footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;font-size:12px;co
 
   <div id="abaNoticias" style="display:none;">
     <section>
-      <h2 class="secao-titulo">🗞️ Notícias de imprensa</h2>
-      <p class="secao-sub">Jornais, sites e blogs cobrindo os nossos temas, via Google Alertas.</p>
+      <div class="trilha">/imprensa</div><h2 class="secao-titulo">notícias de imprensa</h2>
+      <p class="secao-sub">Jornais, sites e blogs cobrindo os nossos temas, via Google Alertas. Mostramos só os últimos 3 dias.</p>
       <div class="filtros-mini" id="filtrosImprensa"></div>
       <div class="noticias-grid" id="noticiasImprensa"></div>
     </section>
@@ -181,7 +230,10 @@ footer{max-width:1100px;margin:30px auto 0;padding:0 24px 40px;font-size:12px;co
 </main>
 
 <footer>
-  Protótipo de demonstração — dados de exemplo coletados manualmente em 29/09/2026 a partir das APIs abertas da Câmara e do Senado, para ilustrar como o painel funcionará. A versão automatizada (Google Sheets + Apps Script) atualiza esses dados diariamente a partir das mesmas fontes oficiais.
+  <h4>de onde vêm os dados</h4>
+  <p>Câmara dos Deputados e Senado Federal (dados abertos), e-Cidadania do Senado (consultas públicas abertas) e Google Alertas (imprensa e Diário Oficial). A atualização é automática e diária.</p>
+  <p>Este painel é uma ferramenta de acompanhamento: confira sempre a fonte oficial no link de cada item. A cobertura do Diário Oficial é parcial.</p>
+  <p>🌿 jacutinga · de olho no meio ambiente</p>
 </footer>
 
 <script>
@@ -197,12 +249,22 @@ const CORES = {
   "Crimes ambientais":"#1B1B1B", "Data centers e tecnologia":"#5c5648"
 };
 
-// ======= COLE AQUI OS TRÊS LINKS QUE VOCÊ COPIOU DO GOOGLE SHEETS =======
-const LINK_CAMARA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1571863902&single=true&output=csv";
-const LINK_SENADO = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=726752641&single=true&output=csv";
-const LINK_ECIDADANIA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1540667840&single=true&output=csv";
-const LINK_ALERTAS_DOU = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=526939485&single=true&output=csv";
-const LINK_NOTICIAS_IMPRENSA = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1655859703&single=true&output=csv";
+// ======= COLE SEUS LINKS AQUI (entre as aspas) =======
+const MEUS_LINKS = {
+  camara: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1571863902&single=true&output=csv",
+  senado: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=726752641&single=true&output=csv",
+  ecidadania: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1540667840&single=true&output=csv",
+  alertasDOU: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=526939485&single=true&output=csv",
+  noticiasImprensa: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1655859703&single=true&output=csv"
+};
+// =====================================================
+const _cfg = window.JACUTINGA_CONFIG || {};
+const _pick = k => MEUS_LINKS[k] || _cfg[k] || "";
+const LINK_CAMARA = _pick("camara");
+const LINK_SENADO = _pick("senado");
+const LINK_ECIDADANIA = _pick("ecidadania");
+const LINK_ALERTAS_DOU = _pick("alertasDOU");
+const LINK_NOTICIAS_IMPRENSA = _pick("noticiasImprensa");
 // =========================================================================
 
 let DADOS = [];
@@ -294,12 +356,12 @@ async function carregarDados(){
   DADOS = [...camara, ...senado].filter(d=>d.projeto.trim()!=="/");
   DADOS.forEach(d=>{ d.dias = diasEntre(d.data); });
   VOTACAO_POPULAR = ecidadania.filter(d=>d.projeto.trim()!=="");
-  NOTICIAS_DOU = alertas.filter(d=>d.titulo.trim()!=="" && d.titulo!=="Sem título");
-  NOTICIAS_IMPRENSA = imprensa.filter(d=>d.titulo.trim()!=="");
+  NOTICIAS_DOU = alertas.filter(d=>d.titulo.trim()!=="" && d.titulo!=="Sem título").sort((a,b)=>new Date(b.data)-new Date(a.data));
+  NOTICIAS_IMPRENSA = imprensa.filter(d=>d.titulo.trim()!=="" && recente3dias(d.data)).sort((a,b)=>(parseData(b.data)||0)-(parseData(a.data)||0));
 
   if(DADOS.length===0){
     aviso.style.display="block";
-    aviso.textContent = "Não consegui carregar dados da planilha. Confira se os links CSV foram colados corretamente no código, e se a aba foi mesmo publicada (Arquivo → Compartilhar → Publicar na web).";
+    aviso.textContent = "Não consegui carregar dados da planilha. Confira se os links CSV foram colados no bloco MEUS_LINKS do painel, e se a aba foi mesmo publicada (Arquivo → Compartilhar → Publicar na web).";
   }
   montarRadar(); montarKpis(); montarFiltros(); montarTabela();
   montarFiltrosVotacao(); montarVotacaoPopular();
@@ -317,7 +379,7 @@ function filtrarDOU(c){ filtroDOU = c; montarFiltrosDOU(); montarNoticiasDOU(); 
 
 function montarNoticiasDOU(){
   const el = document.getElementById("noticiasDOU");
-  const lista = NOTICIAS_DOU.filter(n => filtroDOU==="Todos" || n.categoria===filtroDOU);
+  const lista = NOTICIAS_DOU.filter(n => filtroDOU==="Todos" || n.categoria===filtroDOU).slice(0,60);
   if(lista.length===0){
     el.innerHTML = '<p style="font-size:13px;color:#7a755f;">Nenhuma publicação encontrada ainda para esse filtro. Os alertas podem levar um tempo para começar a trazer resultados.</p>';
     return;
@@ -331,6 +393,20 @@ function montarNoticiasDOU(){
     </div>`).join("");
 }
 
+const DIAS_IMPRENSA = 3;
+function parseData(s){
+  if(!s) return null;
+  let d = new Date(s);
+  if(!isNaN(d)) return d;
+  const m = String(s).match(/(\d{2})\/(\d{2})\/(\d{4})/);
+  return m ? new Date(m[3]+"-"+m[2]+"-"+m[1]) : null;
+}
+function recente3dias(s){
+  const d = parseData(s);
+  return !d || (new Date() - d) <= DIAS_IMPRENSA*86400000;
+}
+function fmtBR(s){ const d = parseData(s); return d ? d.toLocaleDateString("pt-BR") : ""; }
+
 let filtroImprensa = "Todos";
 function montarFiltrosImprensa(){
   const cats = ["Todos", ...new Set(NOTICIAS_IMPRENSA.map(n=>n.categoria))];
@@ -341,7 +417,7 @@ function filtrarImprensa(c){ filtroImprensa = c; montarFiltrosImprensa(); montar
 
 function montarNoticiasImprensa(){
   const el = document.getElementById("noticiasImprensa");
-  const lista = NOTICIAS_IMPRENSA.filter(n => filtroImprensa==="Todos" || n.categoria===filtroImprensa);
+  const lista = NOTICIAS_IMPRENSA.filter(n => filtroImprensa==="Todos" || n.categoria===filtroImprensa).slice(0,90);
   if(lista.length===0){
     el.innerHTML = '<p style="font-size:13px;color:#7a755f;">Nenhuma notícia encontrada ainda para esse filtro.</p>';
     return;
@@ -352,7 +428,7 @@ function montarNoticiasImprensa(){
       <div class="noticia-corpo">
         <span class="cat" style="color:${CORES[n.categoria]||'#999'}">${n.categoria}</span>
         <div class="tit">${n.titulo}</div>
-        <div class="fonte">${n.fonte||''}</div>
+        <div class="fonte">${n.fonte||''}${n.data?' · '+fmtBR(n.data):''}</div>
       </div>
     </a>`).join("");
 }
@@ -366,6 +442,15 @@ function montarFiltrosVotacao(){
 }
 function filtrarVotacao(c){ filtroVotacao = c; montarFiltrosVotacao(); montarVotacaoPopular(); }
 
+// Edite aqui o texto que vai na mensagem do WhatsApp
+const WHATS_ABERTURA = "🗳️ *Consulta pública aberta no Senado!*";
+const WHATS_CHAMADA = "Vote em 1 minuto e compartilhe com quem se importa:";
+function linkWhats(v){
+  const e = v.ementa.length > 150 ? v.ementa.slice(0,147) + "..." : v.ementa;
+  const msg = WHATS_ABERTURA + "\n\n*" + v.projeto + "* — " + e + "\n\n" + WHATS_CHAMADA + "\n" + v.link + "\n\n🌿 jacutinga · de olho no meio ambiente";
+  return "https://wa.me/?text=" + encodeURIComponent(msg);
+}
+
 function montarVotacaoPopular(){
   const el = document.getElementById("votacaoPopular");
   const lista = VOTACAO_POPULAR.filter(v => filtroVotacao==="Todos" || v.categoria===filtroVotacao);
@@ -378,7 +463,7 @@ function montarVotacaoPopular(){
       <span class="badge-cat" style="background:${CORES[v.categoria]||'#999'}">${v.categoria}</span>
       <div class="proj" style="margin-top:8px;">${v.projeto}</div>
       <div class="ementa">${v.ementa}</div>
-      <a class="votar-btn" href="${v.link}" target="_blank" rel="noopener">Votar agora →</a>
+      <div class="acoes"><a class="votar-btn" href="${v.link}" target="_blank" rel="noopener">Votar agora →</a><a class="whats-btn" href="${linkWhats(v)}" target="_blank" rel="noopener">Enviar no WhatsApp</a></div>
     </div>`).join("");
 }
 
