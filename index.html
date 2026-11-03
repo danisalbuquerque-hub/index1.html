@@ -157,6 +157,25 @@ footer h4{font-family:'Archivo',sans-serif;font-weight:900;font-size:22px;color:
 .resumo-box{margin-top:6px;padding:8px 10px;background:#fff7dc;border:2px dashed var(--tinta);border-radius:6px;font-size:12.5px;line-height:1.45;}
 .resumo-box small{display:block;margin-top:6px;color:#6b6450;}
 .votacao-card .ementa{-webkit-line-clamp:6;}
+.noticia-thumb.com-foto{height:130px;padding:0;overflow:hidden;background:#ddd;}
+.noticia-foto{width:100%;height:100%;object-fit:cover;display:block;}
+.noticia-thumb.sem-foto{height:90px;}
+.noticia-thumb.sem-foto span{font-family:'Archivo',sans-serif;font-weight:900;font-size:18px;text-transform:lowercase;letter-spacing:-.02em;padding:0 12px;text-align:center;line-height:1.1;}
+.rodape-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1100px;margin:0 auto 28px;}
+.rodape-wrap{max-width:1100px;margin:0 auto;}
+footer input:not([type=checkbox]),footer textarea{width:100%;padding:10px 12px;margin-bottom:8px;border:2px solid var(--tinta);border-radius:6px;background:var(--papel);font:inherit;font-size:14px;color:var(--tinta);}
+footer input[type=checkbox]{margin-right:6px;}
+footer button[type=submit]{background:var(--mostarda);color:var(--tinta);border:2px solid var(--branco);border-radius:6px;font-weight:800;font-size:14px;padding:10px 18px;cursor:pointer;}
+footer button[type=submit]:disabled{opacity:.6;cursor:wait;}
+footer label{display:block;font-size:13px;margin:4px 0;}
+footer .rotulo{margin:10px 0 4px;font-family:'Space Mono',monospace;font-size:12px;color:var(--mostarda);text-transform:uppercase;}
+footer .consent{margin:12px 0;font-size:12.5px;}
+.temas-lista{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;}
+footer input.isca{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;}
+.form-msg{min-height:20px;font-size:13px;color:var(--mostarda);margin:8px 0 0;}
+.creditos{max-width:1100px;margin:24px auto 0;padding-top:20px;border-top:2px solid #444;font-size:13px;}
+@media(max-width:640px){.rodape-grid{grid-template-columns:1fr;}.temas-lista{grid-template-columns:1fr;}}
+
 @media(max-width:640px){
   header img.banner{height:210px;object-fit:cover;object-position:50% 22%;}
   .como{display:none;}
@@ -253,10 +272,43 @@ footer h4{font-family:'Archivo',sans-serif;font-weight:900;font-size:22px;color:
 </main>
 
 <footer>
-  <h4>de onde vêm os dados</h4>
-  <p>Câmara dos Deputados e Senado Federal (dados abertos), e-Cidadania do Senado (consultas públicas abertas) e Google Alertas (imprensa e Diário Oficial). A atualização é automática e diária.</p>
-  <p>Este painel é uma ferramenta de acompanhamento: confira sempre a fonte oficial no link de cada item. A cobertura do Diário Oficial é parcial.</p>
-  <p>🌿 jacutinga · de olho no meio ambiente</p>
+  <div class="rodape-grid">
+    <div>
+      <h4>fale com a gente</h4>
+      <form onsubmit="return enviarFormContato(event)">
+        <input name="nome" placeholder="Seu nome" required maxlength="100">
+        <input name="email" type="email" placeholder="Seu e-mail" required maxlength="150">
+        <textarea name="mensagem" placeholder="Sua mensagem" required maxlength="2000" rows="4"></textarea>
+        <input name="site" class="isca" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit">Enviar mensagem</button>
+        <p class="form-msg" id="msgContato"></p>
+      </form>
+    </div>
+    <div>
+      <h4>receba avisos por e-mail</h4>
+      <form onsubmit="return enviarFormAvisos(event)">
+        <input name="email" type="email" placeholder="Seu e-mail" required maxlength="150">
+        <p class="rotulo">O que você quer receber</p>
+        <label><input type="checkbox" name="leis" checked> Projetos de lei que mexeram</label>
+        <label><input type="checkbox" name="consultas" checked> Consultas públicas abertas</label>
+        <p class="rotulo">Temas (sem marcar nenhum, você recebe todos)</p>
+        <div class="temas-lista"><label><input type="checkbox" name="tema" value="Meio ambiente"> Meio ambiente</label><label><input type="checkbox" name="tema" value="Direitos dos animais"> Direitos dos animais</label><label><input type="checkbox" name="tema" value="Agropecuária"> Agropecuária</label><label><input type="checkbox" name="tema" value="Mineração"> Mineração</label><label><input type="checkbox" name="tema" value="Povos originários"> Povos originários</label><label><input type="checkbox" name="tema" value="Água"> Água</label><label><input type="checkbox" name="tema" value="Crimes ambientais"> Crimes ambientais</label><label><input type="checkbox" name="tema" value="Data centers e tecnologia"> Data centers e tecnologia</label></div>
+        <input name="site" class="isca" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label class="consent"><input type="checkbox" name="consentimento" required> Concordo em receber esses avisos por e-mail. Usamos o seu e-mail só para isso, e você pode sair a qualquer momento pelo link que vai em cada mensagem.</label>
+        <button type="submit">Quero receber</button>
+        <p class="form-msg" id="msgAvisos"></p>
+      </form>
+    </div>
+  </div>
+  <div class="rodape-wrap">
+    <h4>de onde vêm os dados</h4>
+    <p>Câmara dos Deputados e Senado Federal (dados abertos), e-Cidadania do Senado (consultas públicas abertas) e Google Alertas (imprensa e Diário Oficial). A atualização é automática e diária.</p>
+    <p>Este painel é uma ferramenta de acompanhamento: confira sempre a fonte oficial no link de cada item. A cobertura do Diário Oficial é parcial. Resumos e níveis (retrocesso, atenção, neutro, avanço) são gerados por inteligência artificial a partir da ementa e podem conter erros.</p>
+  </div>
+  <div class="creditos">
+    <p><b>Painel criado por Danielle Simões Albuquerque</b>, desenvolvido como trabalho da pós-graduação em <b>Mídia, Política e Sociedade</b> da <b>FESPSP – Fundação Escola de Sociologia e Política de São Paulo</b>.</p>
+    <p>Autoras do projeto: Danielle Simões Albuquerque, Laura Gazzinelli, Luma Lins e Yasmin Junqueira.</p>
+  </div>
 </footer>
 
 <script>
@@ -274,11 +326,12 @@ const CORES = {
 
 // ======= COLE SEUS LINKS AQUI (entre as aspas) =======
 const MEUS_LINKS = {
- camara: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1571863902&single=true&output=csv",
+  camara: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1571863902&single=true&output=csv",
   senado: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=726752641&single=true&output=csv",
   ecidadania: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1540667840&single=true&output=csv",
   alertasDOU: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=526939485&single=true&output=csv",
-  noticiasImprensa: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1655859703&single=true&output=csv"
+  noticiasImprensa: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1655859703&single=true&output=csv",
+  formulario: "https://script.google.com/macros/s/AKfycby7cGOSSbyYJvgG5Diy8XJfTJoPRIWZ1yGCyYAQPMOa8PCApsTnkx7DUyRG12eYO7uc/exec"
 };
 // =====================================================
 const _cfg = window.JACUTINGA_CONFIG || {};
@@ -348,6 +401,7 @@ function normalizarLinhaNoticia(row){
     titulo: row["Título"] || "",
     link: row["Link"] || "#",
     fonte: row["Fonte"] || "",
+    imagem: (row["Imagem"] && row["Imagem"] !== "sem imagem") ? row["Imagem"].replace(/^http:\/\//,"https://") : "",
     data: row["Data da publicação"] || ""
   };
 }
@@ -417,6 +471,7 @@ function montarNoticiasDOU(){
     </div>`).join("");
 }
 
+function fotoFalhou(img){ const p = img.parentNode; p.className = "noticia-thumb sem-foto"; p.innerHTML = "<span>" + img.dataset.cat + "</span>"; }
 const DIAS_IMPRENSA = 3;
 function parseData(s){
   if(!s) return null;
@@ -448,7 +503,7 @@ function montarNoticiasImprensa(){
   }
   el.innerHTML = lista.map(n => `
     <a class="noticia-card" href="${n.link}" target="_blank" rel="noopener">
-      <div class="noticia-thumb" style="background:${CORES[n.categoria]||'#999'}22;">${ICONES[n.categoria]||'📰'}</div>
+      <div class="noticia-thumb ${n.imagem ? 'com-foto' : 'sem-foto'}" style="background:${CORES[n.categoria]||'#999'}22;">${n.imagem ? `<img class="noticia-foto" src="${n.imagem.replace(/"/g,'%22')}" alt="" loading="lazy" referrerpolicy="no-referrer" data-cat="${n.categoria}" onerror="fotoFalhou(this)">` : `<span>${n.categoria}</span>`}</div>
       <div class="noticia-corpo">
         <span class="cat" style="color:${CORES[n.categoria]||'#999'}">${n.categoria}</span>
         <div class="tit">${n.titulo}</div>
@@ -565,6 +620,30 @@ function ordenar(campo){
   montarTabela();
 }
 
+const FORM_URL = _pick("formulario");
+function enviarFormulario(tipo, dados, btn, msgEl, textoOk){
+  if(!FORM_URL){ msgEl.textContent = "O formulário ainda não está ativo."; return Promise.resolve(false); }
+  btn.disabled = true; msgEl.textContent = "Enviando...";
+  return fetch(FORM_URL, {method:"POST", mode:"no-cors", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(Object.assign({tipo:tipo}, dados))})
+    .then(()=>{ msgEl.textContent = textoOk; return true; })
+    .catch(()=>{ msgEl.textContent = "Não foi possível enviar agora. Tente de novo mais tarde."; return false; })
+    .finally(()=>{ btn.disabled = false; });
+}
+function enviarFormContato(ev){
+  ev.preventDefault(); const f = ev.target;
+  enviarFormulario("contato", {nome:f.nome.value, email:f.email.value, mensagem:f.mensagem.value, site:f.site.value},
+    f.querySelector("button"), document.getElementById("msgContato"), "Mensagem enviada. Obrigada!").then(ok=>{ if(ok) f.reset(); });
+  return false;
+}
+function enviarFormAvisos(ev){
+  ev.preventDefault(); const f = ev.target;
+  const msg = document.getElementById("msgAvisos");
+  if(!f.leis.checked && !f.consultas.checked){ msg.textContent = "Marque pelo menos uma opção: projetos de lei ou consultas públicas."; return false; }
+  const temas = Array.from(f.querySelectorAll('input[name="tema"]:checked')).map(i=>i.value);
+  enviarFormulario("assinar", {email:f.email.value, leis:f.leis.checked, consultas:f.consultas.checked, temas:temas, consentimento:f.consentimento.checked, site:f.site.value},
+    f.querySelector("button"), msg, "Pronto! Enviamos uma confirmação para o seu e-mail. Se não chegar em alguns minutos, olhe o spam.").then(ok=>{ if(ok) f.reset(); });
+  return false;
+}
 const NIVEIS = {"Retrocesso":["🔴","retro"],"Atenção":["🟠","atencao"],"Neutro":["⚪","neutro"],"Avanço":["🟢","avanco"]};
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function nivelBadge(n){ const x = NIVEIS[n]; return x ? `<span class="nivel nivel-${x[1]}">${x[0]} ${n}</span> ` : ""; }
