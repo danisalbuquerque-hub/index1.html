@@ -159,7 +159,7 @@ footer h4{font-family:'Archivo',sans-serif;font-weight:900;font-size:22px;color:
 .votacao-card .ementa{-webkit-line-clamp:6;}
 .noticia-thumb.com-foto{height:130px;padding:0;overflow:hidden;background:#ddd;}
 .noticia-foto{width:100%;height:100%;object-fit:cover;display:block;}
-.noticia-thumb.sem-foto{height:90px;}
+.noticia-thumb.sem-foto{height:130px;padding:0;overflow:hidden;}
 .noticia-thumb.sem-foto span{font-family:'Archivo',sans-serif;font-weight:900;font-size:18px;text-transform:lowercase;letter-spacing:-.02em;padding:0 12px;text-align:center;line-height:1.1;}
 .rodape-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:1100px;margin:0 auto 28px;}
 .rodape-wrap{max-width:1100px;margin:0 auto;}
@@ -254,6 +254,12 @@ footer input.isca{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;
 
   <div id="abaDOU" style="display:none;">
     <section>
+      <div class="trilha">/viraram-lei</div>
+      <h2 class="secao-titulo">viraram lei</h2>
+      <p class="secao-sub">Projetos que acompanhamos e que foram sancionados, promulgados ou vetados. A publicação no Diário Oficial vem depois dessa etapa.</p>
+      <div class="votacao-grid" id="viraramLei"></div>
+    </section>
+    <section>
       <div class="trilha">/diario-oficial</div><h2 class="secao-titulo">diário oficial</h2>
       <p class="secao-sub">Via Google Alertas, monitorando o site in.gov.br pelos nossos temas (cobertura parcial — depende do que o Google indexa).</p>
       <div class="filtros-mini" id="filtrosDOU"></div>
@@ -306,8 +312,9 @@ footer input.isca{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;
     <p>Este painel é uma ferramenta de acompanhamento: confira sempre a fonte oficial no link de cada item. A cobertura do Diário Oficial é parcial. Resumos e níveis (retrocesso, atenção, neutro, avanço) são gerados por inteligência artificial a partir da ementa e podem conter erros.</p>
   </div>
   <div class="creditos">
-    <p><b>Painel criado por Danielle Simões Albuquerque</b>, desenvolvido como trabalho da pós-graduação em <b>Mídia, Política e Sociedade</b> da <b>FESPSP – Fundação Escola de Sociologia e Política de São Paulo</b>.</p>
-    <p>Autoras do projeto: Danielle Simões Albuquerque, Laura Gazzinelli, Luma Lins e Yasmin Junqueira.</p>
+    <p><b>Autoras do projeto: Danielle Simões Albuquerque, Laura Gazzinelli, Luma Lins e Yasmin Junqueira.</b></p>
+    <p><b>Trabalho da pós-graduação em Mídia, Política e Sociedade da FESPSP – Fundação Escola de Sociologia e Política de São Paulo.</b></p>
+    <p><b>Painel criado por Danielle Simões Albuquerque.</b></p>
   </div>
 </footer>
 
@@ -443,6 +450,7 @@ async function carregarDados(){
   montarRadar(); montarKpis(); montarFiltros(); montarTabela();
   montarFiltrosVotacao(); montarVotacaoPopular();
   montarFiltrosNivel();
+  montarViraramLei();
   montarFiltrosDOU(); montarNoticiasDOU();
   montarFiltrosImprensa(); montarNoticiasImprensa();
 }
@@ -471,7 +479,22 @@ function montarNoticiasDOU(){
     </div>`).join("");
 }
 
-function fotoFalhou(img){ const p = img.parentNode; p.className = "noticia-thumb sem-foto"; p.innerHTML = "<span>" + img.dataset.cat + "</span>"; }
+const ARTE_COR = {"Meio ambiente":["#D6A61F","#1B1B1B"],"Direitos dos animais":["#E5241C","#F3E7C9"],"Agropecuária":["#B587C4","#1B1B1B"],"Mineração":["#1B1B1B","#D6A61F"],"Povos originários":["#F3E7C9","#E5241C"],"Água":["#7FA3AC","#1B1B1B"],"Crimes ambientais":["#1B1B1B","#E5241C"],"Data centers e tecnologia":["#B587C4","#F3E7C9"]};
+const ARTE_FORMA = {
+"Meio ambiente":'<rect x="143" y="72" width="14" height="44" fill="currentColor"/><circle cx="150" cy="52" r="34" fill="currentColor"/><circle cx="168" cy="46" r="7" fill="#F3E7C9"/>',
+"Direitos dos animais":'<ellipse cx="150" cy="86" rx="27" ry="21" fill="currentColor"/><circle cx="116" cy="60" r="10" fill="currentColor"/><circle cx="136" cy="42" r="10" fill="currentColor"/><circle cx="164" cy="42" r="10" fill="currentColor"/><circle cx="184" cy="60" r="10" fill="currentColor"/>',
+"Agropecuária":'<rect x="148" y="34" width="4" height="82" fill="currentColor"/><ellipse cx="136" cy="50" rx="6" ry="13" transform="rotate(-35 136 50)" fill="currentColor"/><ellipse cx="164" cy="50" rx="6" ry="13" transform="rotate(35 164 50)" fill="currentColor"/><ellipse cx="136" cy="70" rx="6" ry="13" transform="rotate(-35 136 70)" fill="currentColor"/><ellipse cx="164" cy="70" rx="6" ry="13" transform="rotate(35 164 70)" fill="currentColor"/><ellipse cx="136" cy="90" rx="6" ry="13" transform="rotate(-35 136 90)" fill="currentColor"/><ellipse cx="164" cy="90" rx="6" ry="13" transform="rotate(35 164 90)" fill="currentColor"/>',
+"Mineração":'<polygon points="104,112 140,50 176,112" fill="currentColor"/><polygon points="150,112 188,34 226,112" fill="#F3E7C9"/><polygon points="188,34 206,70 170,70" fill="currentColor" opacity=".35"/>',
+"Povos originários":'<ellipse cx="150" cy="65" rx="15" ry="48" transform="rotate(35 150 65)" fill="currentColor"/><line x1="118" y1="104" x2="182" y2="26" stroke="#F3E7C9" stroke-width="3"/>',
+"Água":'<path d="M150 26 C150 26 116 66 116 88 a34 34 0 0 0 68 0 C184 66 150 26 150 26Z" fill="currentColor"/><ellipse cx="136" cy="92" rx="6" ry="10" fill="#F3E7C9" opacity=".7"/>',
+"Crimes ambientais":'<polygon points="150,28 192,104 108,104" fill="currentColor"/><rect x="148" y="54" width="4" height="28" fill="#1B1B1B"/><circle cx="150" cy="92" r="3.5" fill="#1B1B1B"/>',
+"Data centers e tecnologia":'<rect x="108" y="34" width="84" height="22" rx="4" fill="currentColor"/><rect x="108" y="60" width="84" height="22" rx="4" fill="currentColor"/><rect x="108" y="86" width="84" height="22" rx="4" fill="currentColor"/><circle cx="122" cy="45" r="3" fill="#B587C4"/><circle cx="122" cy="71" r="3" fill="#B587C4"/><circle cx="122" cy="97" r="3" fill="#B587C4"/>'
+};
+function arteSvg(cat){
+  const c = ARTE_COR[cat] || ["#D6A61F","#1B1B1B"];
+  return '<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block;color:' + c[1] + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="300" height="130" fill="' + c[0] + '"/><g fill="' + c[1] + '" opacity=".22"><ellipse cx="36" cy="30" rx="9" ry="5" transform="rotate(-30 36 30)"/><ellipse cx="262" cy="98" rx="10" ry="5" transform="rotate(25 262 98)"/><ellipse cx="244" cy="26" rx="7" ry="4"/><ellipse cx="54" cy="104" rx="8" ry="4" transform="rotate(20 54 104)"/></g>' + (ARTE_FORMA[cat] || "") + '</svg>';
+}
+function fotoFalhou(img){ const p = img.parentNode; p.className = "noticia-thumb sem-foto"; p.innerHTML = arteSvg(img.dataset.cat); }
 const DIAS_IMPRENSA = 3;
 function parseData(s){
   if(!s) return null;
@@ -503,7 +526,7 @@ function montarNoticiasImprensa(){
   }
   el.innerHTML = lista.map(n => `
     <a class="noticia-card" href="${n.link}" target="_blank" rel="noopener">
-      <div class="noticia-thumb ${n.imagem ? 'com-foto' : 'sem-foto'}" style="background:${CORES[n.categoria]||'#999'}22;">${n.imagem ? `<img class="noticia-foto" src="${n.imagem.replace(/"/g,'%22')}" alt="" loading="lazy" referrerpolicy="no-referrer" data-cat="${n.categoria}" onerror="fotoFalhou(this)">` : `<span>${n.categoria}</span>`}</div>
+      <div class="noticia-thumb ${n.imagem ? 'com-foto' : 'sem-foto'}" style="background:${CORES[n.categoria]||'#999'}22;">${n.imagem ? `<img class="noticia-foto" src="${n.imagem.replace(/"/g,'%22')}" alt="" loading="lazy" referrerpolicy="no-referrer" data-cat="${n.categoria}" onerror="fotoFalhou(this)">` : arteSvg(n.categoria)}</div>
       <div class="noticia-corpo">
         <span class="cat" style="color:${CORES[n.categoria]||'#999'}">${n.categoria}</span>
         <div class="tit">${n.titulo}</div>
@@ -643,6 +666,20 @@ function enviarFormAvisos(ev){
   enviarFormulario("assinar", {email:f.email.value, leis:f.leis.checked, consultas:f.consultas.checked, temas:temas, consentimento:f.consentimento.checked, site:f.site.value},
     f.querySelector("button"), msg, "Pronto! Enviamos uma confirmação para o seu e-mail. Se não chegar em alguns minutos, olhe o spam.").then(ok=>{ if(ok) f.reset(); });
   return false;
+}
+function montarViraramLei(){
+  const el = document.getElementById("viraramLei");
+  const re = /transformad[ao] em norma|sancionad|promulgad|vetad/i;
+  const lista = DADOS.filter(d => re.test(d.situacao)).sort((a,b)=>(parseData(b.data)||0)-(parseData(a.data)||0)).slice(0,30);
+  if(!lista.length){ el.innerHTML = '<p style="font-size:13px;color:#7a755f;">Nenhum projeto monitorado nessa etapa por enquanto.</p>'; return; }
+  el.innerHTML = lista.map(d => `
+    <div class="votacao-card">
+      <span class="badge-cat" style="background:${CORES[d.categoria]||'#999'}">${d.categoria}</span> ${nivelBadge(d.nivel)}
+      <div class="proj" style="margin-top:8px;">${d.projeto} <span class="badge-casa ${d.casa}">${d.casa}</span></div>
+      <div class="ementa">${d.resumo ? esc(d.resumo) : d.ementa}</div>
+      <div class="ementa" style="-webkit-line-clamp:unset;"><b>Situação:</b> ${esc(d.situacao)}</div>
+      <a class="votar-btn" href="${d.link}" target="_blank" rel="noopener">Ver tramitação →</a>
+    </div>`).join("");
 }
 const NIVEIS = {"Retrocesso":["🔴","retro"],"Atenção":["🟠","atencao"],"Neutro":["⚪","neutro"],"Avanço":["🟢","avanco"]};
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
