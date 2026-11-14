@@ -237,6 +237,46 @@ footer input.isca{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;
   .tile{min-height:150px;}
   .nav-home{width:34px;height:34px;}
 }
+
+.faixa{padding:16px 0;}
+.tiles{padding:88px 24px 88px;}
+.como-faixa{background:var(--branco);border-top:2px solid var(--tinta);border-bottom:2px solid var(--tinta);}
+.como-int{max-width:1100px;margin:0 auto;padding:88px 24px;}
+.como-rotulo{font-family:'Space Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--vermelho);margin:0 0 14px;}
+.como-int h2{font-family:'Archivo',sans-serif;font-weight:900;font-size:clamp(30px,4.4vw,52px);line-height:1.02;letter-spacing:-.03em;text-transform:lowercase;margin:0 0 56px;max-width:20ch;}
+.como-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;}
+.como-cols>div{border-top:8px solid var(--mostarda);padding-top:20px;}
+.como-cols .c2{border-top-color:var(--lilas);}
+.como-cols .c3{border-top-color:var(--vermelho);}
+.como-cols h3{font-family:'Archivo',sans-serif;font-weight:900;font-size:24px;letter-spacing:-.02em;text-transform:lowercase;margin:0 0 12px;}
+.como-cols p{font-size:16px;line-height:1.65;margin:0;color:#3d392f;max-width:34ch;}
+.explica{border:2px solid var(--tinta);border-radius:14px;background:var(--branco);box-shadow:var(--sombra);padding:32px;margin:12px 0 40px;}
+.explica h3{font-family:'Archivo',sans-serif;font-weight:900;font-size:28px;letter-spacing:-.03em;text-transform:lowercase;margin:0 0 22px;}
+.explica-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 44px;}
+.explica b{display:block;font-size:15px;margin-bottom:6px;}
+.explica p{margin:0;font-size:14.5px;line-height:1.6;color:#3d392f;}
+.explica-link{display:inline-block;margin-top:26px;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--vermelho);text-decoration:none;}
+.explica-link:hover{text-decoration:underline;}
+footer{padding:80px max(24px,calc((100% - 1100px)/2 + 24px)) 56px;font-size:15px;line-height:1.7;}
+footer h4{font-size:26px;margin:0 0 20px;}
+.rodape-grid{gap:72px;margin-bottom:64px;}
+footer input:not([type=checkbox]),footer textarea{padding:13px 14px;margin-bottom:12px;font-size:15px;}
+footer label{margin:8px 0;font-size:14px;}
+footer .rotulo{margin:20px 0 8px;}
+footer .consent{margin:22px 0;line-height:1.55;}
+.temas-lista{gap:2px 20px;}
+.rodape-wrap{padding-top:44px;border-top:2px solid #444;}
+.rodape-wrap p{max-width:72ch;margin:0 0 16px;}
+.creditos{margin-top:44px;padding-top:36px;font-size:14px;line-height:1.8;}
+.creditos p{margin:0 0 12px;}
+@media(max-width:900px){.como-cols{grid-template-columns:1fr;gap:36px;}.explica-grid{grid-template-columns:1fr;}.rodape-grid{gap:48px;}}
+@media(max-width:640px){.tiles{padding:56px 24px 56px;}.como-int{padding:56px 24px;}.como-int h2{margin-bottom:36px;}.explica{padding:22px;}footer{padding-top:56px;}}
+
+.lei-acoes{display:flex;flex-wrap:wrap;gap:8px;}
+.opine-btn{display:inline-block;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;padding:9px 12px;border:2px solid var(--tinta);border-radius:6px;background:var(--mostarda);color:var(--tinta);text-decoration:none;box-shadow:2px 2px 0 var(--tinta);}
+.opine-btn.senado{background:var(--lilas);}
+.opine-btn:hover{transform:translate(-1px,-1px);box-shadow:3px 3px 0 var(--tinta);}
+.explica-nota{margin:26px 0 0;padding-top:20px;border-top:2px dashed #d9cfae;font-size:14px;line-height:1.65;color:#3d392f;}
 </style>
 </head>
 <body>
@@ -260,11 +300,17 @@ footer input.isca{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;
     <button class="tile t4" onclick="abrir('noticias')"><span class="tile-n">04</span><h3>notícias</h3><p id="cntNoticias">carregando</p><span class="seta">→</span></button>
   </section>
   
-  <div class="como">
-    <div><b>01</b><h3>a gente monitora</h3><p>Câmara, Senado, e-Cidadania e imprensa, todo dia, nos temas do jacutinga.</p></div>
-    <div><b>02</b><h3>a gente destaca</h3><p>O que voltou a mexer aparece primeiro. Projeto antigo que segue ativo não some do radar.</p></div>
-    <div><b>03</b><h3>você age</h3><p>Vote nas consultas abertas e mande o link para a sua rede no WhatsApp.</p></div>
-  </div>
+  <section class="como-faixa">
+    <div class="como-int">
+      <p class="como-rotulo">como funciona</p>
+      <h2>de olho todo dia, para você agir na hora certa</h2>
+      <div class="como-cols">
+        <div class="c1"><h3>a gente monitora</h3><p>Câmara, Senado, e-Cidadania e imprensa, todos os dias, nos temas do jacutinga.</p></div>
+        <div class="c2"><h3>a gente destaca</h3><p>O que voltou a mexer aparece primeiro. Projeto antigo que segue ativo não some do radar.</p></div>
+        <div class="c3"><h3>você age</h3><p>Vote nas consultas abertas e mande o link para a sua rede no WhatsApp.</p></div>
+      </div>
+    </div>
+  </section>
 </div>
 <div id="telaApp" style="display:none;">
 <nav class="tabs">
@@ -290,7 +336,7 @@ footer input.isca{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;
 
     <section>
       <div class="trilha">/projetos-ativos</div><h2 class="secao-titulo">todos os projetos ativos</h2>
-      <p class="secao-sub">Inclui projetos antigos que continuam tramitando — não somem do radar só porque são de anos anteriores.</p>
+      <p class="secao-sub">Inclui projetos antigos que continuam tramitando — não somem do radar só porque são de anos anteriores. Quando houver enquete da Câmara ou consulta do Senado sobre o projeto, aparece o botão para opinar.</p>
       <div class="filtros-mini" id="filtrosNivel"></div>
       <div class="filtros" id="filtros"></div>
       <input class="busca" id="busca" placeholder="Buscar por número, ementa ou autor...">
@@ -305,6 +351,17 @@ footer input.isca{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;
     <section>
       <div class="trilha">/consultas-abertas</div><h2 class="secao-titulo">vote agora</h2>
       <p class="secao-sub">Consultas do e-Cidadania (Senado) sobre nossos temas, abertas para qualquer cidadão votar sim ou não.</p>
+      <div class="explica">
+        <h3>o que acontece com o seu voto</h3>
+        <div class="explica-grid">
+          <div><b>Não decide o resultado.</b><p>A votação não obriga relatores nem senadores a seguir a maioria. Ela serve para sinalizar a opinião do público que participou e ajudar cada senador a formar a sua.</p></div>
+          <div><b>Chega aos gabinetes.</b><p>Os dados são públicos e as manifestações são comunicadas periodicamente aos gabinetes dos senadores.</p></div>
+          <div><b>Fica aberta enquanto o projeto tramita.</b><p>Não há prazo definido. Para ver o placar de hoje, abra o projeto pelo botão "Votar agora".</p></div>
+          <div><b>Um voto por pessoa.</b><p>Quem tem cadastro no portal vota uma única vez, e o voto não pode ser mudado nem apagado. Confirme com atenção.</p></div>
+        </div>
+        <p class="explica-nota">Na Câmara, as enquetes funcionam de forma parecida: qualquer pessoa pode opinar sobre qualquer proposta, indicando pontos positivos e negativos ou votando nas opiniões de outros cidadãos. As enquetes não têm rigor científico, e cabe ao relator decidir se vai considerar as opiniões ao sugerir mudanças no texto. Há enquetes separadas para o texto original e para cada mudança, como substitutivo e emenda: confira antes de votar. Nos projetos da aba Leis em tramitação, procure o botão "Opinar na enquete da Câmara".</p>
+        <a class="explica-link" href="https://www12.senado.leg.br/ecidadania/comofuncionaconsultapublica" target="_blank" rel="noopener">Entenda como funciona, no site do Senado →</a>
+      </div>
       <div class="filtros-mini" id="filtrosVotacao"></div>
       <div class="votacao-grid" id="votacaoPopular"></div>
     </section>
@@ -314,7 +371,7 @@ footer input.isca{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;
     <section>
       <div class="trilha">/viraram-lei</div>
       <h2 class="secao-titulo">viraram lei</h2>
-      <p class="secao-sub">Projetos que acompanhamos e que foram sancionados, promulgados ou vetados. A publicação no Diário Oficial vem depois dessa etapa.</p>
+      <p class="secao-sub">Projetos que acompanhamos e que foram sancionados, promulgados ou vetados. A publicação no Diário Oficial vem depois dessa etapa. A lista se atualiza sozinha, todos os dias.</p>
       <div class="votacao-grid" id="viraramLei"></div>
     </section>
     
@@ -462,7 +519,7 @@ function normalizarLinhaNoticia(row){
     titulo: row["Título"] || "",
     link: row["Link"] || "#",
     fonte: row["Fonte"] || "",
-    imagem: (row["Imagem"] && row["Imagem"] !== "sem imagem") ? row["Imagem"].replace(/^http:\/\//,"https://") : "",
+    imagem: (row["Imagem"] && !/^sem imagem/.test(row["Imagem"])) ? row["Imagem"].replace(/^http:\/\//,"https://") : "",
     data: row["Data da publicação"] || ""
   };
 }
@@ -494,6 +551,7 @@ async function carregarDados(){
   DADOS = [...camara, ...senado].filter(d=>d.projeto.trim()!=="/");
   DADOS.forEach(d=>{ d.dias = diasEntre(d.data); });
   VOTACAO_POPULAR = ecidadania.filter(d=>d.projeto.trim()!=="");
+  MAPA_ECID = {}; VOTACAO_POPULAR.forEach(v => { MAPA_ECID[chaveProjeto(v.projeto)] = v.link; });
   NOTICIAS_DOU = alertas.filter(d=>d.titulo.trim()!=="" && d.titulo!=="Sem título").sort((a,b)=>new Date(b.data)-new Date(a.data));
   NOTICIAS_IMPRENSA = imprensa.filter(d=>d.titulo.trim()!=="" && recente3dias(d.data)).sort((a,b)=>(parseData(b.data)||0)-(parseData(a.data)||0));
 
@@ -770,6 +828,20 @@ function montarFiltrosNivel(){
 }
 function filtrarNivel(n){ filtroNivel = n; montarFiltrosNivel(); montarTabela(); }
 
+let MAPA_ECID = {};
+function chaveProjeto(s){ return String(s||"").toUpperCase().replace(/\s+/g," ").trim(); }
+const TIPOS_ENQUETE_CAMARA = ["PL","PLP","PEC","PDL","PDC","MPV","PLV"];
+function acoesOpine(d){
+  const l = [];
+  if(d.casa==="Câmara"){
+    const m = /idProposicao=(\d+)/.exec(d.link || "");
+    if(m && TIPOS_ENQUETE_CAMARA.indexOf(chaveProjeto(d.projeto).split(" ")[0]) !== -1)
+      l.push({rotulo:"Opinar na enquete da Câmara", url:"https://www.camara.leg.br/enquetes/" + m[1], cls:"camara"});
+  }
+  const e = MAPA_ECID[chaveProjeto(d.projeto)];
+  if(e) l.push({rotulo:"Votar na consulta do Senado", url:e, cls:"senado"});
+  return l.length ? '<div class="lei-acoes">' + l.map(x => '<a class="opine-btn ' + x.cls + '" href="' + x.url + '" target="_blank" rel="noopener">' + x.rotulo + '</a>').join("") + '</div>' : "";
+}
 let limiteLeis = 24;
 function mudarOrdem(v){ ordemCampo = v; ordemAsc = true; limiteLeis = 24; montarTabela(); }
 function montarTabela(){
@@ -791,6 +863,7 @@ function montarTabela(){
       <h3 class="lei-proj"><a href="${d.link}" target="_blank" rel="noopener">${d.projeto}</a></h3>
       <p class="lei-texto">${esc(d.ementa)}</p>
       ${resumoBloco(d)}
+      ${acoesOpine(d)}
       <div class="lei-rodape"><span>${esc(d.situacao)}</span><span class="lei-dias ${d.dias<=10 ? 'quente' : ''}">${d.dias<999 ? 'há '+d.dias+' d' : ''}</span></div>
     </article>`).join("") || '<p class="carregando">Nenhum projeto encontrado.</p>';
 }
