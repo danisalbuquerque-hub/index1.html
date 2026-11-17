@@ -767,6 +767,8 @@ body{overflow-x:hidden;}
 @media(max-width:900px){.dados-banda .dado{justify-content:flex-start!important;gap:6px!important;}}
 .hero-legenda{margin:14px 0 0;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--tinta);opacity:.85;text-transform:lowercase;}
 @media(max-width:900px){.hero-legenda{display:none;}}
+/* menu do topo: nunca deixar o botão passar da borda direita */
+@media(min-width:901px){.topo-dir{flex:none!important;width:auto!important;max-width:100%;}.topo-nav{flex:none!important;}.topo-dir .btn-alertas{flex:none!important;}.topo{padding-right:clamp(44px,5vw,88px)!important;box-sizing:border-box;}}
 </style>
 </head>
 <body>
