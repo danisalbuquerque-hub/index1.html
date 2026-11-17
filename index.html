@@ -159,7 +159,8 @@ footer h4{font-family:var(--hel);font-weight:900;font-size:22px;color:var(--most
 .resumo-box{margin-top:6px;padding:8px 10px;background:#fff7dc;border:2px dashed var(--tinta);border-radius:6px;font-size:12.5px;line-height:1.45;}
 .resumo-box small{display:block;margin-top:6px;color:#6b6450;}
 .votacao-card .ementa{-webkit-line-clamp:6;}
-.noticia-thumb.com-foto{height:130px;padding:0;overflow:hidden;background:#ddd;}
+.noticia-thumb.com-foto{height:130px;padding:0;overflow:hidden;background:#ddd;position:relative;}
+.selo-ilus{position:absolute;left:6px;bottom:6px;background:rgba(11,11,11,.78);color:#fff;font:600 10px/1 var(--hel);letter-spacing:.02em;padding:4px 7px;border-radius:3px;}
 .noticia-foto{width:100%;height:100%;object-fit:cover;display:block;}
 .noticia-thumb.sem-foto{height:130px;padding:0;overflow:hidden;}
 .noticia-thumb.sem-foto span{font-family:var(--hel);font-weight:900;font-size:18px;text-transform:lowercase;letter-spacing:-.02em;padding:0 12px;text-align:center;line-height:1.1;}
@@ -761,7 +762,8 @@ function normalizarLinhaNoticia(row){
     titulo: row["Título"] || "",
     link: row["Link"] || "#",
     fonte: row["Fonte"] || "",
-    imagem: (row["Imagem"] && !/^sem imagem/.test(row["Imagem"])) ? row["Imagem"].replace(/^http:\/\//,"https://") : "",
+    imagem: (row["Imagem"] && !/^sem imagem/.test(row["Imagem"])) ? row["Imagem"].replace(/^ilustrativa\|/,"").replace(/^http:\/\//,"https://") : "",
+    ilustrativa: /^ilustrativa\|/.test(row["Imagem"] || ""),
     data: row["Data da publicação"] || ""
   };
 }
@@ -844,9 +846,17 @@ const ARTE_FORMA = {
 "Crimes ambientais":'<polygon points="150,28 192,104 108,104" fill="currentColor"/><rect x="148" y="54" width="4" height="28" fill="#1B1B1B"/><circle cx="150" cy="92" r="3.5" fill="#1B1B1B"/>',
 "Data centers e tecnologia":'<rect x="108" y="34" width="84" height="22" rx="4" fill="currentColor"/><rect x="108" y="60" width="84" height="22" rx="4" fill="currentColor"/><rect x="108" y="86" width="84" height="22" rx="4" fill="currentColor"/><circle cx="122" cy="45" r="3" fill="#CCCCFF"/><circle cx="122" cy="71" r="3" fill="#CCCCFF"/><circle cx="122" cy="97" r="3" fill="#CCCCFF"/>'
 };
+const ARTE_LINHAS = {"Meio ambiente":["meio","ambiente"],"Direitos dos animais":["direitos","dos animais"],"Agropecuária":["agro","pecuária"],"Mineração":["mineração"],"Povos originários":["povos","originários"],"Água":["água"],"Crimes ambientais":["crimes","ambientais"],"Data centers e tecnologia":["data centers","e tecnologia"]};
 function arteSvg(cat){
   const c = ARTE_COR[cat] || ["#E5FE00","#1B1B1B"];
-  return '<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block;color:' + c[1] + '" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="300" height="130" fill="' + c[0] + '"/><g fill="' + c[1] + '" opacity=".22"><ellipse cx="36" cy="30" rx="9" ry="5" transform="rotate(-30 36 30)"/><ellipse cx="262" cy="98" rx="10" ry="5" transform="rotate(25 262 98)"/><ellipse cx="244" cy="26" rx="7" ry="4"/><ellipse cx="54" cy="104" rx="8" ry="4" transform="rotate(20 54 104)"/></g>' + (ARTE_FORMA[cat] || "") + '</svg>';
+  const ls = ARTE_LINHAS[cat] || [String(cat||"notícia").toLowerCase()];
+  const maior = Math.max.apply(null, ls.map(function(t){return t.length + 1;}));
+  const fs = Math.min(28, Math.floor(150 / (maior * 0.68)));
+  const y0 = 75 - ((ls.length - 1) * fs * 1.1) / 2 + fs * 0.34;
+  const txt = ls.map(function(t, i){
+    return '<text x="100" y="' + (y0 + i * fs * 1.1).toFixed(1) + '" text-anchor="middle" font-size="' + fs + '" fill="' + c[1] + '" style="font-family:\'Dela Gothic One\',Helvetica,Arial,sans-serif">' + esc(t) + (i === ls.length - 1 ? '_' : '') + '</text>';
+  }).join("");
+  return '<svg viewBox="0 0 200 150" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="200" height="150" fill="' + c[0] + '"/><rect x="4" y="4" width="192" height="142" fill="none" stroke="' + c[1] + '" stroke-width="2" opacity=".55"/>' + txt + '</svg>';
 }
 function fotoFalhou(img){
   if(!img.dataset.tent && img.src && !/wsrv\.nl/.test(img.src)){   // 1ª falha: tenta de novo por um proxy de imagens gratuito (contorna bloqueio de hotlink)
@@ -887,7 +897,7 @@ function montarNoticiasImprensa(){
   }
   el.innerHTML = lista.map(n => `
     <a class="noticia-card" href="${n.link}" target="_blank" rel="noopener">
-      <div class="noticia-thumb ${n.imagem ? 'com-foto' : 'sem-foto'}" style="background:${CORES[n.categoria]||'#999'}22;">${n.imagem ? `<img class="noticia-foto" src="${n.imagem.replace(/"/g,'%22')}" alt="" loading="lazy" referrerpolicy="no-referrer" data-cat="${n.categoria}" onerror="fotoFalhou(this)">` : arteSvg(n.categoria)}</div>
+      <div class="noticia-thumb ${n.imagem ? 'com-foto' : 'sem-foto'}" style="background:${CORES[n.categoria]||'#999'}22;">${n.imagem ? `<img class="noticia-foto" src="${n.imagem.replace(/"/g,'%22')}" alt="" loading="lazy" referrerpolicy="no-referrer" data-cat="${n.categoria}" onerror="fotoFalhou(this)">${n.ilustrativa ? '<span class="selo-ilus">imagem ilustrativa</span>' : ''}` : arteSvg(n.categoria)}</div>
       <div class="noticia-corpo">
         <span class="cat" style="color:${CORES[n.categoria]||'#999'}">${n.categoria}</span>
         <div class="tit">${n.titulo}</div>
