@@ -516,6 +516,15 @@ body{overflow-x:hidden;}
 }
 
 @media(max-width:900px){.explica-curta{display:none!important;}}
+
+/* celular: primeira tela só com o boneco grande */
+@media(max-width:900px){
+  :root{--Em:min(128vw,600px)!important;}
+  .hero{display:none!important;}
+  .aja{display:none!important;}
+  .hero-wrap{grid-area:2/1/3/3!important;min-height:0!important;height:0!important;}
+  .estatua{grid-area:2/1/3/3!important;justify-self:center!important;margin:30px 0 24px 0!important;}
+}
 </style>
 </head>
 <body>
