@@ -592,6 +592,41 @@ body{overflow-x:hidden;}
 .whats-btn{display:inline-flex!important;align-items:center;gap:6px;background:#25D366!important;color:#06311a!important;border:0!important;border-radius:999px!important;box-shadow:none!important;font-size:13.5px!important;font-weight:800!important;padding:.6em 1.05em!important;}
 .whats-btn .zap-ic{width:16px;height:16px;fill:#06311a;}
 @media(max-width:640px){.etq-novo{right:-6px;}}
+
+/* quatro quadrados distribuídos por igual (sem vão no meio) */
+@media(min-width:901px){
+  .tiles{grid-template-columns:repeat(4,1fr)!important;}
+  .tiles .t1{grid-column:1!important;}.tiles .t2{grid-column:2!important;}.tiles .t3{grid-column:3!important;}.tiles .t4{grid-column:4!important;}
+  .paineis-cab{grid-column:1/-1!important;max-width:calc(50vw - var(--E) * .22 - var(--pad-x) - 20px);}
+}
+
+/* boneco um pouco maior no computador, com respiro maior dos textos */
+@media(min-width:901px){
+  :root{--E:clamp(380px,min(79vw,133vh),1060px);}
+  .hero{grid-template-columns:minmax(0,1fr) calc(var(--E)*var(--r) + 64px) minmax(0,1fr)!important;}
+}
+
+/* nível: contorno colorido (vermelho = retrocesso, verde = avanço) */
+.nivel.nivel-retro{border:2px solid #E5241C!important;background:#FDECEA!important;}
+.nivel.nivel-avanco{border:2px solid #2E7D4F!important;background:#E6F4EA!important;}
+.nivel.nivel-atencao{border:2px solid #E5A100!important;background:#FFF5D6!important;}
+.nivel.nivel-neutro{border:2px solid #B9B4A0!important;background:#f4f1e8!important;}
+.nivel{padding:2px 10px 2px 6px!important;}
+.chip-mini.nv-retro{border-color:#E5241C;}.chip-mini.nv-avanco{border-color:#2E7D4F;}.chip-mini.nv-atencao{border-color:#E5A100;}.chip-mini.nv-neutro{border-color:#B9B4A0;}
+.chip-mini.nv-retro.ativo{background:#E5241C;color:#fff;}.chip-mini.nv-avanco.ativo{background:#2E7D4F;color:#fff;}.chip-mini.nv-atencao.ativo{background:#E5A100;color:#0B0B0B;}.chip-mini.nv-neutro.ativo{background:#B9B4A0;color:#0B0B0B;}
+
+/* carinhas em forma de adesivo */
+.stk{width:30px;height:34px;flex:none;display:inline-block;vertical-align:middle;transform:rotate(-9deg);filter:drop-shadow(0 1.5px 0 rgba(0,0,0,.28));overflow:visible;}
+.nivel{display:inline-flex!important;align-items:center;gap:4px;padding:2px 11px 2px 3px!important;font-size:12.5px!important;}
+.nivel .stk{width:26px;height:30px;margin:-5px 0 -6px -9px;}
+.nivel-retro .stk{transform:rotate(7deg);}.nivel-atencao .stk{transform:rotate(-12deg);}.nivel-avanco .stk{transform:rotate(10deg);}
+.chip-mini .stk{width:20px;height:23px;margin:-4px 3px -5px -3px;}
+
+.votacao-card>.badge-cat,.votacao-card>.nivel{vertical-align:middle;}
+.votacao-card{padding-top:22px!important;}
+.nivel{vertical-align:middle;margin:2px 0 2px 4px!important;}
+.nivel .stk{width:28px;height:32px;margin:-6px 0 -7px -10px;}
+.lei-topo{align-items:center!important;}
 </style>
 </head>
 <body>
@@ -700,6 +735,7 @@ body{overflow-x:hidden;}
         </div>
         <a class="fv-cta" href="#" onclick="return compartilharConsultas(event)">vote e mande para a sua rede →</a>
       </div>
+      <div class="filtros-mini" id="filtrosNivelVot"></div>
       <div class="filtros-mini" id="filtrosVotacao"></div>
       <div class="votacao-grid" id="votacaoPopular"></div>
     </section>
@@ -710,6 +746,7 @@ body{overflow-x:hidden;}
       <div class="trilha">/viraram-lei</div>
       <h2 class="secao-titulo">viraram lei</h2>
       <p class="secao-sub">Projetos que acompanhamos e que foram sancionados, promulgados ou vetados. A publicação no Diário Oficial vem depois dessa etapa. A lista se atualiza sozinha, todos os dias.</p>
+      <div class="filtros-mini" id="filtrosNivelLei"></div>
       <div class="votacao-grid" id="viraramLei"></div>
     </section>
     
@@ -1006,6 +1043,7 @@ function montarNoticiasImprensa(){
 let filtroVotacao = "Todos";
 
 function montarFiltrosVotacao(){
+  chipsNivel("filtrosNivelVot", filtroNivelVot, "filtrarNivelVot", VOTACAO_POPULAR);
   const cats = ["Todos", ...new Set(VOTACAO_POPULAR.map(v=>v.categoria))];
   document.getElementById("filtrosVotacao").innerHTML = cats.map(c=>
     `<button class="chip-mini ${c===filtroVotacao?'ativo':''}" onclick="filtrarVotacao('${c}')">${c}</button>`).join("");
@@ -1029,7 +1067,7 @@ function linkWhats(v){
 
 function montarVotacaoPopular(){
   const el = document.getElementById("votacaoPopular");
-  const lista = VOTACAO_POPULAR.filter(v => filtroVotacao==="Todos" || v.categoria===filtroVotacao);
+  const lista = VOTACAO_POPULAR.filter(v => (filtroVotacao==="Todos" || v.categoria===filtroVotacao) && (filtroNivelVot==="Todos" || v.nivel===filtroNivelVot));
   if(lista.length===0){
     el.innerHTML = '<p style="font-size:13px;color:#7a755f;">Nenhuma votação popular aberta encontrada para esse filtro.</p>';
     return;
@@ -1163,7 +1201,9 @@ function atualizarContadores(){
 function montarViraramLei(){
   const el = document.getElementById("viraramLei");
   const re = /transformad[ao] em norma|sancionad|promulgad|vetad/i;
-  const lista = DADOS.filter(d => re.test(d.situacao)).sort((a,b)=>(parseData(b.data)||0)-(parseData(a.data)||0)).slice(0,30);
+  const todas = DADOS.filter(d => re.test(d.situacao));
+  chipsNivel("filtrosNivelLei", filtroNivelLei, "filtrarNivelLei", todas);
+  const lista = todas.filter(d => filtroNivelLei==="Todos" || d.nivel===filtroNivelLei).sort((a,b)=>(parseData(b.data)||0)-(parseData(a.data)||0)).slice(0,30);
   if(!lista.length){ el.innerHTML = '<p style="font-size:13px;color:#7a755f;">Nenhum projeto monitorado nessa etapa por enquanto.</p>'; return; }
   el.innerHTML = lista.map(d => `
     <div class="votacao-card">
@@ -1174,7 +1214,19 @@ function montarViraramLei(){
       <a class="votar-btn" href="${d.link}" target="_blank" rel="noopener">Ver tramitação →</a>
     </div>`).join("");
 }
-const NIVEIS = {"Retrocesso":["😡","retro"],"Atenção":["🧐","atencao"],"Neutro":["😐","neutro"],"Avanço":["💅","avanco"]};
+const ADESIVO_ROSTO = {
+  avanco:'<path d="M10.5 18.5q3-4.5 6 0M23.5 18.5q3-4.5 6 0" fill="none"/><path d="M11 24q9 11 18 0z" fill="#0B0B0B"/>',
+  neutro:'<circle cx="14" cy="19" r="2.1" fill="#0B0B0B" stroke="none"/><circle cx="26" cy="19" r="2.1" fill="#0B0B0B" stroke="none"/><path d="M13 27.5h14" fill="none"/>',
+  atencao:'<path d="M9.5 12.5q4-3 8-.8" fill="none"/><circle cx="14" cy="19" r="2.1" fill="#0B0B0B" stroke="none"/><circle cx="26.5" cy="18.5" r="5.2" fill="#fff" stroke-width="2"/><circle cx="26.5" cy="18.5" r="1.9" fill="#0B0B0B" stroke="none"/><path d="M13 28q3.5-3 7 0t7 0" fill="none"/>',
+  retro:'<path d="M8.5 11.5l8 4M31.5 11.5l-8 4" fill="none"/><circle cx="14" cy="20" r="2.1" fill="#0B0B0B" stroke="none"/><circle cx="26" cy="20" r="2.1" fill="#0B0B0B" stroke="none"/><path d="M12.5 30q7.5-8 15 0" fill="none"/>'
+};
+const ADESIVO_GOTAS = '<path d="M10 33.5v4.6a2.6 2.6 0 0 0 5.2 0v-3M24.5 34.5v6a2.4 2.4 0 0 0 4.8 0v-4" fill="#E5FE00" stroke-width="2.2"/>';
+function adesivo(k){
+  return '<svg class="stk" viewBox="0 0 40 46" aria-hidden="true"><circle cx="20" cy="20" r="19.2" fill="#fff"/><g stroke="#0B0B0B" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">' +
+    '<circle cx="20" cy="20" r="16.2" fill="#E5FE00"/>' + (k==="retro" ? ADESIVO_GOTAS : "") + ADESIVO_ROSTO[k] + '</g>' +
+    '<path d="M9 13.5a12.5 12.5 0 0 1 8-6" stroke="#fff" stroke-width="2.6" stroke-linecap="round" fill="none" opacity=".75"/></svg>';
+}
+const NIVEIS = {"Retrocesso":[adesivo("retro"),"retro"],"Atenção":[adesivo("atencao"),"atencao"],"Neutro":[adesivo("neutro"),"neutro"],"Avanço":[adesivo("avanco"),"avanco"]};
 const CHIPS = {"Meio ambiente":["#666633","#fff"],"Direitos dos animais":["#CCCCFF","#0B0B0B"],"Agropecuária":["#D9DBB0","#0B0B0B"],"Mineração":["#0B0B0B","#fff"],"Povos originários":["#003399","#fff"],"Água":["#B8D4F5","#0B0B0B"],"Crimes ambientais":["#ECE8DF","#0B0B0B;box-shadow:inset 0 0 0 1.5px #0B0B0B"],"Data centers e tecnologia":["#9A9AF5","#0B0B0B"]};
 function catEstilo(c){ const x = CHIPS[c] || ["#999","#fff"]; return "background:" + x[0] + ";color:" + x[1]; }
 function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -1184,12 +1236,16 @@ function resumoBloco(d){
   return `<div><button class="resumo-btn" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden">ler resumo (IA)</button><div class="resumo-box" hidden>${esc(d.resumo)}<small>Resumo e classificação gerados por IA a partir da ementa. Podem conter erros: confira o texto oficial.</small></div></div>`;
 }
 let filtroNivel = "Todos";
-function montarFiltrosNivel(){
-  const el = document.getElementById("filtrosNivel");
-  if(!DADOS.some(d=>d.nivel)){ el.innerHTML = ""; return; }
+function chipsNivel(id, atual, fn, lista){
+  const el = document.getElementById(id); if(!el) return;
+  if(!lista.some(d=>d.nivel)){ el.innerHTML = ""; return; }
   el.innerHTML = ["Todos","Retrocesso","Atenção","Avanço","Neutro"].map(n =>
-    `<button class="chip-mini ${n===filtroNivel?'ativo':''}" onclick="filtrarNivel('${n}')">${n==="Todos" ? "Todos os níveis" : NIVEIS[n][0]+" "+n}</button>`).join("");
+    `<button class="chip-mini ${n==="Todos" ? "" : "nv-" + NIVEIS[n][1]} ${n===atual?'ativo':''}" onclick="${fn}('${n}')">${n==="Todos" ? "Todos os níveis" : NIVEIS[n][0]+" "+n}</button>`).join("");
 }
+function montarFiltrosNivel(){ chipsNivel("filtrosNivel", filtroNivel, "filtrarNivel", DADOS); }
+let filtroNivelVot = "Todos", filtroNivelLei = "Todos";
+function filtrarNivelVot(n){ filtroNivelVot = n; montarFiltrosVotacao(); montarVotacaoPopular(); }
+function filtrarNivelLei(n){ filtroNivelLei = n; montarViraramLei(); }
 function filtrarNivel(n){ filtroNivel = n; montarFiltrosNivel(); montarTabela(); }
 
 let MAPA_ECID = {};
