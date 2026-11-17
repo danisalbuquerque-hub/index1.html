@@ -659,6 +659,114 @@ body{overflow-x:hidden;}
 .chip-mini .stk{width:17px!important;height:17px!important;margin:0 2px 0 0!important;}
 .etq-novo{top:-12px!important;right:18px!important;transform:rotate(3deg)!important;font-size:11px!important;padding:2px 9px!important;}
 @media(max-width:640px){.etq-novo{right:14px!important;}}
+/* menu do topo: mais respiro à direita */
+@media(min-width:901px){.topo{padding-right:clamp(44px,5vw,88px)!important;}}
+/* ler mais / ler menos */
+.ementa.aberta,.lei-texto.aberta{-webkit-line-clamp:unset!important;display:block!important;overflow:visible!important;}
+.ler-mais{all:unset;cursor:pointer;display:inline-block;margin:0 0 10px;font-weight:700;font-size:13px;color:var(--tinta);border-bottom:2px solid var(--tinta);line-height:1.2;}
+.ler-mais:focus-visible{outline:2px solid var(--tinta);outline-offset:3px;}
+/* brilhinho: maior, repete e aparece mesmo com animações reduzidas */
+.brilho{width:72px!important;height:72px!important;margin:-36px 0 0 -36px!important;animation:brilha2 5s 1.2s ease-out infinite!important;display:block!important;}
+.brilho::before{width:4px!important;}.brilho::after{height:4px!important;}
+@keyframes brilha2{0%{opacity:0;transform:scale(.2) rotate(0);}6%{opacity:1;transform:scale(1.15) rotate(30deg);}16%{opacity:0;transform:scale(.4) rotate(70deg);}100%{opacity:0;transform:scale(.4) rotate(70deg);}}
+@media(max-width:900px){.brilho{display:none!important;}}
+@media(prefers-reduced-motion:reduce){.brilho{animation:brilha3 5s 1.2s ease-out infinite!important;display:block!important;}@keyframes brilha3{0%,100%{opacity:0}6%{opacity:1}16%{opacity:0}}}
+/* brilhinho: reflexo suave no canto da lente (sem cruz) */
+.brilho{left:calc(50% + var(--E)*var(--r)*.075 - var(--E)*.052)!important;top:calc(22px + var(--E)*.168 - var(--E)*.022)!important;width:34px!important;height:34px!important;margin:-17px 0 0 -17px!important;}
+.brilho::before{content:""!important;position:absolute!important;inset:0!important;left:0!important;top:0!important;width:100%!important;height:100%!important;border-radius:50%!important;background:radial-gradient(circle,#fff 0,rgba(255,255,255,.95) 18%,rgba(255,255,255,.45) 40%,rgba(255,255,255,0) 70%)!important;box-shadow:none!important;transform:none!important;}
+.brilho::after{content:""!important;position:absolute!important;left:50%!important;top:50%!important;width:26px!important;height:3px!important;border-radius:3px!important;background:linear-gradient(90deg,rgba(255,255,255,0),#fff 50%,rgba(255,255,255,0))!important;box-shadow:none!important;transform:translate(-30%,-50%) rotate(-40deg)!important;opacity:.9;}
+/* brilhinho visível sobre a cerâmica: miolo branco com halo amarelo da marca */
+.brilho{width:46px!important;height:46px!important;margin:-23px 0 0 -23px!important;}
+.brilho::before{background:radial-gradient(circle,#fff 0,#fff 16%,rgba(255,255,255,.9) 26%,rgba(229,254,0,.75) 46%,rgba(229,254,0,0) 72%)!important;}
+.brilho::after{width:34px!important;height:3px!important;background:linear-gradient(90deg,rgba(229,254,0,0),#fff 50%,rgba(229,254,0,0))!important;box-shadow:0 0 6px 1px rgba(229,254,0,.9)!important;}
+/* brilhinho: posição no canto da lente e halo mais suave */
+.brilho{left:calc(50% + var(--E)*var(--r)*.075 - var(--E)*.052 - 9px)!important;top:calc(22px + var(--E)*.168 - var(--E)*.022 + 16px)!important;width:38px!important;height:38px!important;margin:-19px 0 0 -19px!important;}
+.brilho::before{background:radial-gradient(circle,#fff 0,#fff 20%,rgba(255,255,255,.85) 32%,rgba(255,246,190,.55) 52%,rgba(255,246,190,0) 74%)!important;}
+.brilho::after{width:28px!important;box-shadow:0 0 5px 1px rgba(255,246,190,.9)!important;background:linear-gradient(90deg,rgba(255,255,255,0),#fff 50%,rgba(255,255,255,0))!important;}
+/* faixa de dados (prévia) */
+.dados-faixa{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:none;margin:0 var(--pad-x,32px);padding:48px 0 56px;}
+.dado{border:2px solid var(--tinta);border-radius:16px;box-shadow:4px 4px 0 var(--tinta);padding:22px 24px;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;}
+.dado b{white-space:nowrap;font-size:clamp(48px,5.2vw,76px);line-height:1;letter-spacing:-.03em;font-weight:800;}
+.dado span{font-size:17px;font-weight:600;line-height:1.3;color:#1B1B1B;}
+.dado small{font-size:12px;color:#555;font-weight:500;}
+.d1{background:#CCCCFF;color:var(--tinta);}.d2{background:var(--tinta);color:#fff;}.d2 span,.d2 small{color:#fff;}.d3{background:#E5FE00;color:var(--tinta);}
+@media(max-width:900px){.dados-faixa{grid-template-columns:1fr;margin:0 20px;padding:32px 0 8px;}.dado{min-height:0;}}
+/* números em linha, sem caixas */
+.dados-linha{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin:0 0 64px;padding:0;}
+.dados-linha .dado{border:0;border-top:3px solid var(--tinta);border-radius:0;box-shadow:none;background:none!important;color:var(--tinta)!important;padding:16px 0 0;min-height:0;gap:8px;}
+.dados-linha .dado b{font-size:clamp(46px,5vw,72px);}
+.dados-linha .dado span{color:#35322a!important;font-size:16px;font-weight:500;max-width:30ch;}
+.dados-linha .dado small{color:#6b675c!important;}
+@media(max-width:900px){.dados-linha{grid-template-columns:1fr;gap:28px;margin-bottom:40px;}}
+/* números: linha limpa, sem caixas nem barras */
+.dados-linha{display:grid;grid-template-columns:repeat(3,1fr);column-gap:0;row-gap:0;margin:56px 0 8px;padding:0;}
+.dados-linha .dl-rot{grid-column:1/-1;margin:0 0 18px;}
+.dados-linha .dado{border:0!important;border-radius:0;box-shadow:none;padding:4px 32px 4px 28px;border-left:2px solid var(--tinta)!important;}
+.dados-linha .dado:first-of-type{padding-left:0;border-left:0!important;}
+@media(max-width:900px){.dados-linha{grid-template-columns:1fr;row-gap:22px;}.dados-linha .dado,.dados-linha .dado:first-of-type{padding:0 0 0 16px;border-left:3px solid var(--tinta)!important;}}
+/* banda de números: bloco próprio, cor própria */
+.banda-wrap{background:var(--tinta);color:#fff;}
+.dados-banda{max-width:1052px;margin:0 auto;padding:44px 0 48px;display:grid;grid-template-columns:repeat(3,1fr);}
+.dados-banda .db-rot{grid-column:1/-1;margin:0 0 18px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#E5FE00;font-weight:600;}
+.dados-banda .dado{border:0!important;border-radius:0;box-shadow:none;background:none!important;min-height:0;padding:0 32px 0 28px;border-left:1px solid rgba(255,255,255,.35)!important;color:#fff!important;gap:8px;}
+.dados-banda .dado:first-of-type{padding-left:0;border-left:0!important;}
+.dados-banda .dado b{color:#E5FE00;font-size:clamp(46px,5vw,72px);}
+.dados-banda .dado span{color:#fff!important;font-size:16px;font-weight:500;max-width:30ch;}
+.dados-banda .dado small{color:rgba(255,255,255,.7)!important;}
+@media(max-width:900px){.dados-banda{grid-template-columns:1fr;row-gap:24px;padding:32px 20px;}.dados-banda .dado,.dados-banda .dado:first-of-type{padding:0 0 0 14px;border-left:3px solid #E5FE00!important;}}
+/* faixa de números: versão leve (lilás) */
+.banda-wrap{background:#E4E4FB!important;color:var(--tinta)!important;}
+.dados-banda{padding:32px 0 34px!important;}
+.dados-banda .db-rot{color:var(--tinta)!important;}
+.dados-banda .dado{color:var(--tinta)!important;border-left:1px solid rgba(0,51,153,.3)!important;}
+.dados-banda .dado b{color:var(--tinta)!important;font-size:clamp(40px,4.2vw,60px)!important;}
+.dados-banda .dado span{color:#2a2a2a!important;}
+.dados-banda .dado small{color:#5a5a6a!important;}
+@media(max-width:900px){.dados-banda .dado,.dados-banda .dado:first-of-type{border-left:3px solid var(--tinta)!important;}}
+/* faixa de números: esquema do menu preto (preto + mostarda + lilás) */
+.banda-wrap{background:#0B0B0B!important;color:#fff!important;}
+.dados-banda .db-rot{color:#CCCCFF!important;}
+.dados-banda .dado{color:#fff!important;border-left:1px solid #3a3a3a!important;}
+.dados-banda .dado b{color:#E5FE00!important;}
+.dados-banda .dado span{color:#fff!important;}
+.dados-banda .dado small{color:#9a9a9a!important;}
+@media(max-width:900px){.dados-banda .dado,.dados-banda .dado:first-of-type{border-left:3px solid #E5FE00!important;}}
+/* ===== celular: versão mais curta ===== */
+.mais-op>summary{display:none;}
+@media(max-width:900px){
+ /* números lado a lado */
+ .dados-banda{grid-template-columns:repeat(3,1fr)!important;row-gap:0!important;padding:22px 16px 24px!important;}
+ .dados-banda .db-rot{margin-bottom:10px!important;}
+ .dados-banda .dado,.dados-banda .dado:first-of-type{padding:0 8px 0 10px!important;border-left:1px solid #3a3a3a!important;}
+ .dados-banda .dado:first-of-type{padding-left:0!important;border-left:0!important;}
+ .dados-banda .dado b{font-size:30px!important;letter-spacing:-.02em!important;white-space:nowrap;}
+ .dados-banda .dado span{font-size:11.5px!important;line-height:1.3!important;font-weight:500!important;}
+ .dados-banda .dado small{display:none!important;}
+ /* "como funciona": só os títulos; toque abre */
+ .como-cols{row-gap:0!important;}
+ .como-cols>div{border-bottom:1px solid #d9d4c6;padding:2px 0;}
+ .como-cols>div h3{cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin:12px 0!important;}
+ .como-cols>div h3::after{content:"+";font-size:22px;font-weight:400;margin-left:12px;}
+ .como-cols>div.aberto h3::after{content:"–";}
+ .como-cols>div>p{display:none;}.como-cols>div.aberto>p{display:block;margin-bottom:14px;}
+ .como-cols>div::before{display:none;}
+ /* para quem é: sem parágrafo longo */
+ .pq-texto>p:not(.como-rotulo){display:none;}
+ /* formulário */
+ .mais-op>summary{display:block;cursor:pointer;font-weight:700;font-size:14px;color:var(--tinta);padding:10px 0;list-style:none;}
+ .mais-op>summary::after{content:" +";}
+ .mais-op[open]>summary::after{content:" –";}
+ .ff-grid>div:nth-child(2) h4,.rodape-wrap>h4{cursor:pointer;display:flex;justify-content:space-between;}
+ .ff-grid>div:nth-child(2) h4::after,.rodape-wrap>h4::after{content:"+";font-weight:400;}
+ .ff-grid>div:nth-child(2).aberto h4::after,.rodape-wrap.aberto>h4::after{content:"–";}
+ .ff-grid>div:nth-child(2) form{display:none;}.ff-grid>div:nth-child(2).aberto form{display:block;}
+ .rodape-wrap>p{display:none;}.rodape-wrap.aberto>p{display:block;}
+ .ff-ilus{display:none!important;}
+ .creditos p{font-size:12px!important;}
+}
+@media(max-width:900px){.dados-banda .dado{justify-content:flex-start!important;gap:6px!important;}}
+.hero-legenda{margin:14px 0 0;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--tinta);opacity:.85;text-transform:lowercase;}
+@media(max-width:900px){.hero-legenda{display:none;}}
 </style>
 </head>
 <body>
@@ -670,10 +778,10 @@ body{overflow-x:hidden;}
     <h1 class="sr-only">Tocaia, painel de monitoramento ambiental</h1>
     <section class="hero">
       <div class="hero-esq">
-        <p class="hero-texto">Acompanhe projetos de lei, consultas públicas e notícias sobre meio ambiente, direitos dos animais, agropecuária, mineração, povos originários e água.</p>
+        <p class="hero-texto">O Congresso vota o futuro do meio ambiente, dos direitos dos animais, dos povos originários, do agronegócio e da mineração. A gente avisa antes, em linguagem simples, e mostra como agir ou mobilizar.</p>
         <span class="aja">AJA</span>
       </div>
-      <div class="hero-marca"><p class="hero-sub">painel de<br>monitoramento<br>ambiental</p></div>
+      <div class="hero-marca"><p class="hero-sub">Enquanto você<br>dormia, o<br>Congresso<br>votou.</p><p class="hero-legenda">tocaia · painel de monitoramento ambiental</p></div>
     </section>
   </div>
   <div class="faixa" aria-hidden="true"><div class="faixa-trilho"><span>vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; </span><span>vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; vote &nbsp;/&nbsp; acompanhe &nbsp;/&nbsp; compartilhe &nbsp;/&nbsp; aja &nbsp;/&nbsp; </span></div></div>
@@ -681,13 +789,22 @@ body{overflow-x:hidden;}
   <section class="tiles" id="paineis">
     <div class="paineis-cab">
       <p class="como-rotulo">o painel</p>
-      <h2>tudo o que está em jogo no meio ambiente, num só lugar</h2>
+      <h2>o que o Congresso espera que você não veja, num só lugar</h2>
       <p class="paineis-sub">Escolha um painel para ver os projetos em tramitação, as consultas abertas para votar, o que já virou lei e as notícias da imprensa.</p>
     </div>
-    <button class="tile t1" onclick="abrir('leis')"><span class="tile-n">01</span><h3>leis em tramitação</h3><p id="cntLeis">carregando</p><span class="seta">→</span></button>
-    <button class="tile t2" onclick="abrir('consultas')"><span class="tile-n">02</span><h3>consultas públicas</h3><p id="cntConsultas">carregando</p><span class="seta">→</span></button>
-    <button class="tile t3" onclick="abrir('dou')"><span class="tile-n">03</span><h3>viraram lei</h3><p id="cntLei">carregando</p><span class="seta">→</span></button>
-    <button class="tile t4" onclick="abrir('noticias')"><span class="tile-n">04</span><h3>notícias</h3><p id="cntNoticias">carregando</p><span class="seta">→</span></button>
+    <button class="tile t1" onclick="abrir('leis')"><span class="tile-n">01</span><h3>leis em tramitação</h3><p id="cntLeis">lendo…</p><span class="seta">→</span></button>
+    <button class="tile t2" onclick="abrir('consultas')"><span class="tile-n">02</span><h3>consultas públicas</h3><p id="cntConsultas">lendo…</p><span class="seta">→</span></button>
+    <button class="tile t3" onclick="abrir('dou')"><span class="tile-n">03</span><h3>viraram lei</h3><p id="cntLei">lendo…</p><span class="seta">→</span></button>
+    <button class="tile t4" onclick="abrir('noticias')"><span class="tile-n">04</span><h3>notícias</h3><p id="cntNoticias">lendo…</p><span class="seta">→</span></button>
+  </section>
+  </div>
+
+  <div class="banda-wrap">
+  <section class="dados-banda" aria-label="Por que isso importa">
+<p class="db-rot">por que importa</p>
+    <div class="dado"><b>91%</b><span>dos eleitores acham importante que candidatos apresentem propostas para a crise climática</span><small>Ipsos / Observatório do Clima</small></div>
+    <div class="dado"><b>70%</b><span>das 66 votações nominais no Congresso (2023–2026) foram derrotas para o meio ambiente</span><small>Farol Verde · Observatório do Clima e IDS</small></div>
+    <div class="dado"><b>1 clique</b><span>para votar nas consultas abertas ou compartilhar com a sua rede</span><small>e-Cidadania e enquetes da Câmara</small></div>
   </section>
   </div>
 
@@ -697,15 +814,15 @@ body{overflow-x:hidden;}
       <p class="como-rotulo">como funciona</p>
       <h2>de olho todo dia, para você agir na hora certa</h2>
       <div class="como-cols">
-        <div class="c1"><h3>a gente monitora</h3><p>Todos os dias acompanhamos a Câmara, o Senado, o e-Cidadania e a imprensa, atrás de projetos de lei, consultas públicas e notícias sobre meio ambiente, animais, agropecuária, mineração, povos originários e água.</p></div>
-        <div class="c2"><h3>a gente destaca</h3><p>O que voltou a mexer aparece primeiro, com um resumo em linguagem simples e um selo que indica se o projeto pode ser um retrocesso ou um avanço. Projeto antigo que segue ativo não some do radar.</p></div>
-        <div class="c3"><h3>você age</h3><p>Vote nas consultas públicas abertas e compartilhe com a sua rede pelo WhatsApp. Cadastre o seu e-mail e receba alertas das leis e das consultas dos temas que importam para você.</p></div>
+        <div class="c1"><h3>a gente lê o que o Congresso vota</h3><p>Todos os dias acompanhamos a Câmara, o Senado, o e-Cidadania e a imprensa, em busca de projetos e consultas sobre os 8 temas ambientais que a tocaia cobre. Sim, a gente lê os PDFs inteiros. Você não precisa.</p></div>
+        <div class="c2"><h3>a gente traduz para você</h3><p>O que voltou a mexer aparece primeiro, com um resumo em linguagem simples e um selo que indica se o projeto pode ser um retrocesso ou um avanço. Projeto antigo que segue ativo não some do radar.</p></div>
+        <div class="c3"><h3>você age</h3><p>Sem passeata e sem fila: um clique já conta. Vote nas consultas públicas abertas e compartilhe com a sua rede pelo WhatsApp. Cadastre o seu e-mail e receba alertas das leis e das consultas dos temas que importam para você.</p></div>
       </div>
       <div class="para-quem">
         <div class="pq-texto">
           <p class="como-rotulo">para quem é</p>
-          <h3>para quem quer participar, e para quem ajuda a informar</h3>
-          <p>A tocaia é feita para cidadãs e cidadãos que querem acompanhar e participar das decisões que afetam o meio ambiente. E também para quem leva essa informação adiante: use o painel para pautar reportagens, produzir posts e vídeos para as redes e mobilizar o seu público. Os dados vêm de fontes públicas, e cada item traz o link para o texto oficial.</p>
+          <h3>informação só muda alguma coisa quando circula</h3>
+          <p>A tocaia é feita para quem vota e para quem divulga. Cidadãs e cidadãos acompanham e participam das decisões que afetam o meio ambiente. ONGs, jornalistas e criadores de conteúdo levam o que está em jogo para a sua rede, a tempo de agir. Os dados vêm de fontes públicas, e cada item traz o link para o texto oficial.</p>
           <a class="pq-btn" href="#avisos" onclick="return irAvisos(event)">receba os alertas por e-mail</a>
         </div>
         <ul class="pq-lista">
@@ -801,6 +918,7 @@ body{overflow-x:hidden;}
     <div class="ff-grid">
       <div><h4>avisos por e-mail</h4><form onsubmit="return enviarFormAvisos(event)">
         <input name="email" type="email" placeholder="Seu e-mail" required maxlength="150">
+        <details class="mais-op"><summary>mais opções: temas e WhatsApp</summary>
         <p class="rotulo">WhatsApp (opcional)</p>
         <input name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 91234-5678" maxlength="20">
         <label class="consent consent-whats"><input type="checkbox" name="consentimentoWhats"> Aceito que a tocaia use este número para me avisar por WhatsApp no futuro. Ainda não enviamos mensagens por lá: guardamos o número só para isso, e você pode pedir para sair a qualquer momento.</label>
@@ -809,6 +927,7 @@ body{overflow-x:hidden;}
         <label><input type="checkbox" name="consultas" checked> Consultas públicas abertas</label>
         <p class="rotulo">Temas (sem marcar nenhum, você recebe todos)</p>
         <div class="temas-lista"><label><input type="checkbox" name="tema" value="Meio ambiente"> Meio ambiente</label><label><input type="checkbox" name="tema" value="Direitos dos animais"> Direitos dos animais</label><label><input type="checkbox" name="tema" value="Agropecuária"> Agropecuária</label><label><input type="checkbox" name="tema" value="Mineração"> Mineração</label><label><input type="checkbox" name="tema" value="Povos originários"> Povos originários</label><label><input type="checkbox" name="tema" value="Água"> Água</label><label><input type="checkbox" name="tema" value="Crimes ambientais"> Crimes ambientais</label><label><input type="checkbox" name="tema" value="Data centers e tecnologia"> Data centers e tecnologia</label></div>
+        </details>
         <input name="site" class="isca" tabindex="-1" autocomplete="off" aria-hidden="true">
         <label class="consent"><input type="checkbox" name="consentimento" required> Concordo em receber esses avisos por e-mail. Usamos o seu e-mail só para isso, e você pode sair a qualquer momento pelo link que vai em cada mensagem.</label>
         <button type="submit">Quero receber</button>
@@ -1207,7 +1326,7 @@ function enviarFormAvisos(ev){
   if(zap && !f.consentimentoWhats.checked){ msg.textContent = "Para guardar o seu WhatsApp, marque a caixa de autorização logo abaixo do número (ou apague o número)."; return false; }
   if(zap && (zap.length<10 || zap.length>13)){ msg.textContent = "Confira o número do WhatsApp: use o DDD e o número, por exemplo (11) 91234-5678."; return false; }
   enviarFormulario("assinar", {email:f.email.value, whatsapp:zap, consentimentoWhats:f.consentimentoWhats.checked, leis:f.leis.checked, consultas:f.consultas.checked, temas:temas, consentimento:f.consentimento.checked, site:f.site.value},
-    f.querySelector("button"), msg, "Pronto! Enviamos uma confirmação para o seu e-mail. Se não chegar em alguns minutos, olhe o spam.").then(ok=>{ if(ok) f.reset(); });
+    f.querySelector("button"), msg, "Pronto. Agora o Congresso não passa mais batido. Você vai receber um e-mail de boas-vindas (se não chegar, olhe o spam).").then(ok=>{ if(ok) f.reset(); });
   return false;
 }
 function abrir(nome){
@@ -1310,23 +1429,52 @@ function montarTabela(){
   document.getElementById("contaLeis").textContent = linhas.length + (linhas.length===1 ? " projeto" : " projetos");
   document.getElementById("maisLeis").style.display = linhas.length > limiteLeis ? "inline-block" : "none";
   document.getElementById("leisGrid").innerHTML = linhas.slice(0, limiteLeis).map(d => `
-    <article class="lei ${d.dias<=10 ? 'recente' : ''}">${d.dias<=10 ? '<span class="etq-novo">novo</span>' : ''}
+    <article class="lei ${d.dias<=10 ? 'recente' : ''}">${d.dias<=10 ? '<span class="etq-novo">' + (d.dias===0?'hoje':d.dias===1?'ontem':'há '+d.dias+' dias') + '</span>' : ''}
       <div class="lei-topo"><span class="badge-cat" style="${catEstilo(d.categoria)}">${d.categoria}</span><span class="casa-txt">${d.casa}</span><span class="topo-nivel">${nivelBadge(d.nivel)}</span></div>
       <h3 class="lei-proj"><a href="${d.link}" target="_blank" rel="noopener">${d.projeto}</a></h3>
       <p class="lei-texto">${esc(d.resumo || d.ementa)}</p>
       ${d.resumo ? '<div class="ia-nota">resumo feito por IA</div>' : ''}
       ${acoesOpine(d)}
-      <div class="lei-rodape"><span>${esc(d.situacao)}</span><span class="lei-dias ${d.dias<=10 ? 'quente' : ''}">${d.dias<999 ? 'há '+d.dias+' d' : ''}</span></div>
-    </article>`).join("") || '<p class="carregando">Nenhum projeto encontrado.</p>';
+      <div class="lei-rodape"><span>${esc(d.situacao)}</span><span class="lei-dias">${(d.dias<999 && d.dias>10) ? 'há '+d.dias+' d' : ''}</span></div>
+    </article>`).join("") || '<p class="carregando">Nada por aqui. Desconfie.</p>';
 }
 
 document.getElementById("busca").addEventListener("input", montarTabela);
-document.getElementById("leisGrid").innerHTML = '<p class="carregando">Carregando dados da planilha...</p>';
+document.getElementById("leisGrid").innerHTML = '<p class="carregando">Lendo o Diário Oficial por você...</p>';
 
 carregarDados();
 
 function compartilharConsultas(e){if(e)e.preventDefault();var t="Vote nas consultas públicas abertas sobre meio ambiente: "+location.href.split("#")[0];window.open("https://wa.me/?text="+encodeURIComponent(t),"_blank","noopener");return false;}
 (function(){var o=document.querySelector(".como-selo");if(!o)return;document.querySelectorAll("img[data-selo]").forEach(function(i){i.src=o.src;});})();
+</script>
+<script>
+(function(){
+  var SEL=".votacao-card .ementa,.rcard .ementa,.lei-texto";
+  function ajusta(){
+    document.querySelectorAll(SEL).forEach(function(el){
+      var b=el.nextElementSibling;
+      var tem=b&&b.classList&&b.classList.contains("ler-mais");
+      if(el.classList.contains("aberta")||tem) return;
+      if(el.scrollHeight>el.clientHeight+2){
+        var btn=document.createElement("button");btn.type="button";btn.className="ler-mais";btn.textContent="ler mais";
+        btn.addEventListener("click",function(){var a=el.classList.toggle("aberta");btn.textContent=a?"ler menos":"ler mais";});
+        el.insertAdjacentElement("afterend",btn);
+      }
+    });
+  }
+  var t;function agenda(){clearTimeout(t);t=setTimeout(ajusta,150);}
+  new MutationObserver(agenda).observe(document.body,{childList:true,subtree:true});
+  window.addEventListener("resize",agenda);window.addEventListener("load",agenda);
+})();
+</script>
+<script>
+(function(){
+  var mm=window.matchMedia("(max-width:900px)");
+  function ini(){ document.querySelectorAll(".mais-op").forEach(function(d){ if(!mm.matches) d.setAttribute("open",""); else d.removeAttribute("open"); }); }
+  ini(); (mm.addEventListener?mm.addEventListener("change",ini):mm.addListener(ini));
+  function liga(sel,pai){document.querySelectorAll(sel).forEach(function(h){h.addEventListener("click",function(){ if(!mm.matches) return; var p=pai?h.closest(pai):h.parentElement; p.classList.toggle("aberto"); });});}
+  liga(".como-cols>div h3"); liga(".ff-grid>div:nth-child(2) h4"); liga(".rodape-wrap>h4");
+})();
 </script>
 </body>
 </html>
