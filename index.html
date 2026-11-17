@@ -393,6 +393,11 @@ html{scroll-behavior:smooth;}
 .pq-lista b{font-size:17px;font-weight:700;letter-spacing:0;text-transform:none;}
 .pq-lista span{font-size:15px;line-height:1.55;color:#3d392f;}
 @media(max-width:560px){.pq-lista li,.pq-lista li:nth-child(n){grid-template-columns:1fr;}}
+
+/* botão "receba os alertas" do topo: mesmo desenho do botão do bloco "para quem é" */
+.btn-alertas,.topo-dir .btn-alertas{background:var(--mostarda);color:var(--tinta);font-weight:700;border:2px solid var(--tinta);border-radius:999px;box-shadow:3px 3px 0 var(--tinta);text-decoration:none;transition:transform .15s,box-shadow .15s;}
+.btn-alertas:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--tinta);}
+.btn-alertas:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--tinta);}
 /* menu: leve e simples */
 .tab{font-family:var(--hel);font-weight:400;font-size:clamp(14px,1.4vw,18px);text-transform:lowercase;letter-spacing:.01em;}
 .tab br{display:none}
@@ -681,12 +686,12 @@ const CORES = {"Meio ambiente":"#666633","Direitos dos animais":"#003399","Agrop
 
 // ======= COLE SEUS LINKS AQUI (entre as aspas) =======
 const MEUS_LINKS = {
-  camara: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1571863902&single=true&output=csv",
-  senado: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=726752641&single=true&output=csv",
-  ecidadania: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1540667840&single=true&output=csv",
+  camara: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiatBihyLxknU591KQR7_Lv7vI3qD29OCu5OkxsfHVF-PA-ZotSoSVeo36AjJqAHI4rPAZhcKZnrfZ/pub?gid=1571863902&single=true&output=csv",
+  senado: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiatBihyLxknU591KQR7_Lv7vI3qD29OCu5OkxsfHVF-PA-ZotSoSVeo36AjJqAHI4rPAZhcKZnrfZ/pub?gid=726752641&single=true&output=csv",
+  ecidadania: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiatBihyLxknU591KQR7_Lv7vI3qD29OCu5OkxsfHVF-PA-ZotSoSVeo36AjJqAHI4rPAZhcKZnrfZ/pub?gid=1540667840&single=true&output=csv",
   alertasDOU: "",
-  noticiasImprensa: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7DxhtwJQx16n0y9jNj7Y-8cRIMoCV7bLjcOdBuSyRJcX1HaTzKDh6J74Q0SNI6ZL5yCXKZUwdGNHo/pub?gid=1655859703&single=true&output=csv",
-  formulario: "https://script.google.com/macros/s/AKfycby7cGOSSbyYJvgG5Diy8XJfTJoPRIWZ1yGCyYAQPMOa8PCApsTnkx7DUyRG12eYO7uc/exec"
+  noticiasImprensa: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiatBihyLxknU591KQR7_Lv7vI3qD29OCu5OkxsfHVF-PA-ZotSoSVeo36AjJqAHI4rPAZhcKZnrfZ/pub?gid=1655859703&single=true&output=csv",
+  formulario: "https://script.google.com/macros/s/AKfycbwIUk-yl4odbJOZ6QyGY_M7MyAQrxgrCZXOO1B1kMw_VVtUlJUJVonTGV6LxYzRbwMimw/exec"
 };
 // =====================================================
 const _cfg = window.JACUTINGA_CONFIG || {};
