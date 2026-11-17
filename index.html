@@ -780,6 +780,23 @@ body{overflow-x:hidden;}
 .hero-sub{line-height:.92!important;}
 .paineis-cab h2{line-height:.94!important;}
 .hero-legenda{margin-top:18px!important;}
+/* temas que a tocaia acompanha */
+.temas-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:14px 0 0;max-width:520px;}
+.temas-chips .tc-rot{font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--tinta);margin-right:4px;}
+.temas-chips .badge-cat{font-size:12.5px;padding:4px 11px;white-space:nowrap;}
+/* temas em lista simples no espaço à direita do título */
+.temas-lista{grid-column:3/5;grid-row:1;align-self:end;justify-self:end;z-index:8;margin:0 0 clamp(20px,2.6vw,36px);width:min(300px,100%);color:#0B0B0B;}
+.temas-lista .tl-rot{margin:0 0 8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--tinta);}
+.temas-lista ul{list-style:none;margin:0;padding:0;}
+.temas-lista li{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #cfc9b8;font-size:16px;font-weight:700;}
+.temas-lista li:last-child{border-bottom:1px solid #cfc9b8;}
+.temas-lista li i{flex:none;width:12px;height:12px;border-radius:50%;display:block;}
+@media(max-width:900px){.temas-lista{grid-column:1/-1;grid-row:auto;justify-self:stretch;width:auto;margin:6px 0 14px;}
+ .temas-lista ul{display:grid;grid-template-columns:1fr 1fr;column-gap:18px;}.temas-lista li{font-size:14px;padding:6px 0;}.temas-lista li:last-child{border-bottom:0;}}
+/* lista de temas: largura fixa à direita */
+@media(min-width:901px){.temas-lista{width:290px!important;min-width:290px;}.temas-lista li{white-space:nowrap;}.temas-lista li i{box-shadow:inset 0 0 0 1.5px rgba(11,11,11,.55);}}
+.temas-lista{display:block!important;}.temas-lista .tl-rot{display:block!important;width:auto!important;margin:0 0 8px!important;}.temas-lista ul{display:block;}
+@media(max-width:900px){.temas-lista ul{display:grid!important;}}
 </style>
 </head>
 <body>
@@ -804,6 +821,19 @@ body{overflow-x:hidden;}
       <p class="como-rotulo">o painel</p>
       <h2>o que o Congresso espera que você não veja, num só lugar</h2>
       <p class="paineis-sub">Escolha um painel para ver os projetos em tramitação, as consultas abertas para votar, o que já virou lei e as notícias da imprensa.</p>
+    </div>
+    <div class="temas-lista" aria-label="Temas que a tocaia acompanha">
+      <p class="tl-rot">8 temas</p>
+      <ul>
+        <li><i style="background:#666633"></i>meio ambiente</li>
+        <li><i style="background:#CCCCFF"></i>direitos dos animais</li>
+        <li><i style="background:#D9DBB0"></i>agropecuária</li>
+        <li><i style="background:#0B0B0B"></i>mineração</li>
+        <li><i style="background:#003399"></i>povos originários</li>
+        <li><i style="background:#B8D4F5"></i>água</li>
+        <li><i style="background:#ECE8DF;box-shadow:inset 0 0 0 1.5px #0B0B0B"></i>crimes ambientais</li>
+        <li><i style="background:#9A9AF5"></i>data centers e tecnologia</li>
+      </ul>
     </div>
     <button class="tile t1" onclick="abrir('leis')"><span class="tile-n">01</span><h3>leis em tramitação</h3><p id="cntLeis">lendo…</p><span class="seta">→</span></button>
     <button class="tile t2" onclick="abrir('consultas')"><span class="tile-n">02</span><h3>consultas públicas</h3><p id="cntConsultas">lendo…</p><span class="seta">→</span></button>
