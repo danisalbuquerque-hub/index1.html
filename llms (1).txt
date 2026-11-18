@@ -1,0 +1,17 @@
+# tocaia
+
+> Painel gratuito e sem fins lucrativos que monitora o Congresso e alerta quem se importa com o meio ambiente, os animais e os povos originários. De olho no estrago (agronegócio, mineração, data centers e mais) e no que merece apoio. A gente chega antes e mostra como agir.
+
+A tocaia monitora a Câmara dos Deputados, o Senado Federal, o e-Cidadania (consultas públicas) e notícias da imprensa. Os temas acompanhados são: meio ambiente, direitos dos animais, agropecuária, mineração, povos originários, água, crimes ambientais e data centers e tecnologia. Os projetos recebem os selos Avanço, Retrocesso, Atenção ou Neutro, gerados por inteligência artificial a partir da ementa; confira sempre a fonte oficial. A atualização é automática e diária.
+
+## Páginas
+- [Painel](https://danisalbuquerque-hub.github.io/): projetos de lei, consultas públicas, projetos que viraram lei e notícias.
+- [Perguntas frequentes](https://danisalbuquerque-hub.github.io/perguntas.html): o que é, fontes, classificação, como agir, créditos e uso das informações.
+
+## Contato
+tocaiapelomeioambiente@gmail.com
+
+## Créditos
+Concepção e desenvolvimento por Danielle Simões Albuquerque. Desdobramento do trabalho acadêmico coletivo de Danielle Simões Albuquerque, Laura Gazzinelli, Luma Lins e Yasmin Junqueira, na pós-graduação em Mídia, Política e Sociedade da FESPSP.
+
+Pedimos que as informações sejam citadas com a fonte "tocaia" e, sempre que possível, com a fonte oficial de cada item.
