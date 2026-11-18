@@ -801,6 +801,10 @@ body{overflow-x:hidden;}
 @media(max-width:900px){.temas-lista ul{display:grid!important;}}
 .pq-faq{display:block;margin-top:14px;font-size:14px;font-weight:600;color:var(--tinta);text-decoration:underline;text-underline-offset:3px}
 .rodape-faq{margin:0 0 10px}.rodape-faq a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+@media(min-width:901px){footer .rodape-wrap{display:grid;grid-template-columns:1fr 1fr;column-gap:56px;align-items:start}footer .rodape-wrap>h4{grid-column:1/-1}footer .rodape-wrap>p{max-width:none}footer .rodape-wrap>.rodape-faq{grid-column:1/-1;margin:0}}
+@media(max-width:900px){.rodape-wrap>p.rodape-faq{display:block!important;margin:10px 0 0}}
+footer .rodape-faq a{color:#CCCCFF;font-weight:700;font-size:17px;text-decoration:underline;text-underline-offset:4px}
+footer .rodape-faq a:hover{color:#E5FE00}
 </style>
 </head>
 <body>
@@ -998,9 +1002,9 @@ body{overflow-x:hidden;}
     <h4>de onde vêm os dados</h4>
     <p>Câmara dos Deputados e Senado Federal (dados abertos), e-Cidadania do Senado (consultas públicas abertas) e Google Alertas (imprensa). A atualização é automática e diária.</p>
     <p>Este painel é uma ferramenta de acompanhamento: confira sempre a fonte oficial no link de cada item. Resumos e níveis (retrocesso, atenção, neutro, avanço) são gerados por inteligência artificial a partir da ementa e podem conter erros.</p>
+    <p class="rodape-faq"><a href="perguntas.html">perguntas frequentes</a></p>
   </div>
   <div class="creditos">
-    <p class="rodape-faq"><a href="perguntas.html">perguntas frequentes</a></p>
     <p><b>Concepção e desenvolvimento do painel por Danielle Simões Albuquerque</b></p>
     <p><b>O painel é um desdobramento do trabalho acadêmico coletivo de autoria de Danielle Simões Albuquerque, Laura Gazzinelli, Luma Lins e Yasmin Junqueira, desenvolvido no âmbito da pós-graduação em Mídia, Política e Sociedade da FESPSP – Fundação Escola de Sociologia e Política de São Paulo.</b></p>
   </div>
