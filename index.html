@@ -834,7 +834,7 @@ footer .rodape-faq a:hover{color:#E5FE00}
     <h1 class="sr-only">Tocaia, painel de proteção ambiental, dos animais e dos povos originários</h1>
     <section class="hero">
       <div class="hero-esq">
-        <p class="hero-texto">Painel gratuito que monitora o Congresso e alerta quem se importa com o meio ambiente, os animais e os povos originários. Mostra o que ameaça e o que merece apoio. A gente&nbsp;chega&nbsp;antes.</p>
+        <p class="hero-texto">Painel gratuito que monitora o Congresso e alerta quem se importa com o meio ambiente, os animais e os povos originários. De olho no estrago (agronegócio, mineração, data centers e mais) e no que merece apoio. A gente chega antes e mostra como agir.</p>
         <a class="aja" href="#avisos" onclick="return irAvisos(event)" aria-label="Receba os alertas por e-mail">AJA</a>
       </div>
       <div class="hero-marca"><p class="hero-sub">Enquanto você<br>dormia, o<br>Congresso<br>votou.</p><p class="hero-legenda">tocaia · painel de proteção ambiental, dos animais e dos povos originários</p></div>
@@ -1131,7 +1131,7 @@ function buscarCSV(url, normalizador){
     if(!url || url.startsWith("COLE_AQUI")){ resolve([]); return; }
     Papa.parse(url, {
       download:true, header:true, skipEmptyLines:true,
-      complete: (res)=> resolve(res.data.map(normalizador)),
+      complete: (res)=> resolve(res.data.filter(r=>String(r["Nível"]||"").trim()!=="Fora do tema").map(normalizador)),
       error: ()=> resolve([])
     });
   });
