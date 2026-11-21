@@ -1502,7 +1502,7 @@ function atualizarContadores(){
   set("cntLeis", DADOS.length + " projetos ativos");
   set("cntConsultas", VOTACAO_POPULAR.length + " abertas para votar");
   set("cntLei", DADOS.filter(d => re.test(d.situacao)).length + " sancionados ou vetados");
-  (function(){const t=document.getElementById("radarUrgTxt");if(!t)return;const r=DADOS.filter(d=>d.nivel==="Retrocesso").length,c=VOTACAO_POPULAR.length;
+  (function(){const t=document.getElementById("radarUrgTxt");if(!t)return;const rs=new Set();DADOS.concat(VOTACAO_POPULAR).forEach(d=>{if(d.nivel==="Retrocesso")rs.add(chaveProjeto(d.projeto));});const r=rs.size,c=VOTACAO_POPULAR.length;
    if(!(DADOS.length>0||c>0))return;document.getElementById("radarUrg").style.display="flex";t.innerHTML=(r?"<b class='rt'>⚠ "+r+(r===1?" possível retrocesso acontecendo agora":" possíveis retrocessos acontecendo agora")+"</b><br>":"")+"<b>"+c+(c===1?" consulta pública aberta":" consultas públicas abertas")+"</b> para votar · <b>"+DADOS.length+" projetos</b> em tramitação";})();
   set("cntNoticias", NOTICIAS_IMPRENSA.length + " nos últimos 3 dias");
 }
