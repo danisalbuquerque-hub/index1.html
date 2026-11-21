@@ -1352,6 +1352,7 @@ function montarFiltrosVotacao(){
 function filtrarVotacao(c){ filtroVotacao = c; montarFiltrosVotacao(); montarVotacaoPopular(); }
 
 // Mensagem do WhatsApp (mantenha igual à do e-mail em contato_assinaturas.gs)
+const WHATS_OBJ = {"Meio ambiente":"o meio ambiente","Direitos dos animais":"os animais","Povos originários":"os povos originários","Água":"a água","Agropecuária":"a agropecuária","Mineração":"a mineração","Crimes ambientais":"os crimes ambientais","Data centers e tecnologia":"os data centers"};
 const WHATS_TEMA = {"Meio ambiente":"para o meio ambiente","Direitos dos animais":"para os animais","Povos originários":"para os povos originários","Água":"para a água","Agropecuária":"na agropecuária","Mineração":"na mineração","Crimes ambientais":"nos crimes ambientais","Data centers e tecnologia":"nos data centers"};
 function linkWhats(v){
   let txt = (v.resumo || v.ementa || "").replace(/\s+/g," ").trim();
@@ -1364,6 +1365,7 @@ function linkWhats(v){
   const para = WHATS_TEMA[cat] || ("em " + cat.toLowerCase());
   const sinal = v.nivel==="Retrocesso" ? "⚠️ *Possível retrocesso " + para + "*"
               : v.nivel==="Avanço" ? "✅ *Possível avanço " + para + "*"
+              : v.nivel==="Atenção" ? "👀 *Atenção: pode afetar " + (WHATS_OBJ[cat] || cat.toLowerCase()) + "*"
               : "📌 *Tema: " + cat.toLowerCase() + "*";
   const msg = "🚨 *Consulta pública aberta: vote em um minuto*\n" + sinal + "\n\n" + txt +
     "\n\n👉 Vote aqui: " + v.link + "\n\ntocaia.eco.br";
