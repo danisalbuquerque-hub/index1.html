@@ -1365,9 +1365,8 @@ function linkWhats(v){
   const sinal = v.nivel==="Retrocesso" ? "⚠️ *Possível retrocesso " + para + "*"
               : v.nivel==="Avanço" ? "✅ *Possível avanço " + para + "*"
               : "📌 *Tema: " + cat.toLowerCase() + "*";
-  const site = location.href.split("#")[0].split("?")[0];
   const msg = "🚨 *Consulta pública aberta: vote em um minuto*\n" + sinal + "\n\n" + txt +
-    "\n\n📲 Alertas antes que passe: " + site + "\n👉 Vote aqui: " + v.link;
+    "\n\n👉 Vote aqui: " + v.link + "\n\ntocaia.eco.br";
   return "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
 }
 
