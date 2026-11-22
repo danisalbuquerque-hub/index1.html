@@ -1509,19 +1509,24 @@ let filtroAntigos = false;
 
 function montarKpis(){
   const total = DADOS.length;
-  const semana = DADOS.filter(d=>d.dias<=10).length;
-  const antigos = DADOS.filter(d=>new Date(d.data).getFullYear()<=2022).length;
-  const categorias = new Set(DADOS.map(d=>d.categoria)).size;
+  const retro = DADOS.filter(d=>d.nivel==="Retrocesso");
+  const retroRecente = retro.filter(d=>d.dias<=10).length;
+  const avancos = DADOS.filter(d=>d.nivel==="Avanço").length;
+  const nenhum = !filtroRecente && !filtroNivel || (filtroNivel==="Todos" && !filtroRecente);
+  const selRR = filtroRecente && filtroNivel==="Retrocesso";
+  const selR = !filtroRecente && filtroNivel==="Retrocesso";
+  const selA = filtroNivel==="Avanço";
+  const selT = !selRR && !selR && !selA;
   document.getElementById("kpis").innerHTML = `
-    <div class="kpi vermelho ${filtroRecente?'selecionado':''}" onclick="clicarKpiRecente()"><b>${semana}</b><span>mexeram nos últimos 10 dias</span></div>
-    <div class="kpi ${!filtroRecente && !filtroAntigos?'selecionado':''}" onclick="clicarKpiTodos()"><b>${total}</b><span>projetos no radar</span></div>
-    <div class="kpi ${filtroAntigos?'selecionado':''}" onclick="clicarKpiAntigos()"><b>${antigos}</b><span>de 2022 ou antes, ainda ativos</span></div>
-    <div class="kpi" onclick="clicarKpiTodos()"><b>${categorias}</b><span>temas monitorados</span></div>`;
+    <div class="kpi vermelho ${selRR?'selecionado':''}" onclick="clicarKpiRetro(true)"><b>${retroRecente}</b><span>possíveis retrocessos mexeram nos últimos 10 dias</span></div>
+    <div class="kpi ${selR?'selecionado':''}" onclick="clicarKpiRetro(false)"><b>${retro.length}</b><span>possíveis retrocessos em tramitação</span></div>
+    <div class="kpi ${selA?'selecionado':''}" onclick="clicarKpiAvanco()"><b>${avancos}</b><span>possíveis avanços em tramitação</span></div>
+    <div class="kpi ${selT?'selecionado':''}" onclick="clicarKpiTodos()"><b>${total}</b><span>projetos no radar</span></div>`;
 }
 
-function clicarKpiRecente(){ filtroRecente = true; filtroAntigos = false; montarKpis(); montarTabela(); }
-function clicarKpiAntigos(){ filtroAntigos = true; filtroRecente = false; montarKpis(); montarTabela(); }
-function clicarKpiTodos(){ filtroRecente = false; filtroAntigos = false; montarKpis(); montarTabela(); }
+function clicarKpiRetro(soRecentes){ filtroRecente = soRecentes; filtroAntigos = false; filtroNivel = "Retrocesso"; montarKpis(); montarFiltrosNivel(); montarTabela(); }
+function clicarKpiAvanco(){ filtroRecente = false; filtroAntigos = false; filtroNivel = "Avanço"; montarKpis(); montarFiltrosNivel(); montarTabela(); }
+function clicarKpiTodos(){ filtroRecente = false; filtroAntigos = false; filtroNivel = "Todos"; montarKpis(); montarFiltrosNivel(); montarTabela(); }
 
 let filtroAtual = "Todos";
 let filtroCasa = "Todas";
