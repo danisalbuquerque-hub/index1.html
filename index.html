@@ -1384,13 +1384,25 @@ function linkWhats(v){
   txt += " (" + v.projeto + ")";
   const cat = v.categoria || "Meio ambiente";
   const para = WHATS_TEMA[cat] || ("em " + cat.toLowerCase());
-  const sinal = v.nivel==="Retrocesso" ? "⚠️ *Possível retrocesso " + para + "*"
+  const sv = situacaoVotos(v);
+  // sujeito da frase de status (causa defendida), com concordância
+  const SUJ = {"Meio ambiente":["o meio ambiente",0],"Direitos dos animais":["a proteção animal",0],"Povos originários":["os povos originários",1],"Água":["a água",0],"Crimes ambientais":["o combate aos crimes ambientais",0],"Agropecuária":["o meio ambiente",0],"Mineração":["o meio ambiente",0],"Data centers e tecnologia":["o meio ambiente",0]};
+  const su = SUJ[cat] || [cat.toLowerCase(), 0];
+  const Su = su[0].charAt(0).toUpperCase() + su[0].slice(1), ve = su[1] ? "estão" : "está";
+  let sinal;
+  if(sv && sv.estado==="risco") sinal = "🔴 *" + Su + " " + ve + " perdendo na votação*";
+  else if(sv && sv.estado==="disputa") sinal = "🟡 *Votação apertada para " + su[0] + "*";
+  else if(sv && sv.estado==="vantagem") sinal = "🟢 *" + Su + " " + ve + " ganhando na votação*";
+  else sinal = v.nivel==="Retrocesso" ? "⚠️ *Possível retrocesso " + para + "*"
               : v.nivel==="Avanço" ? "✅ *Possível avanço " + para + "*"
               : v.nivel==="Atenção" ? "👀 *Atenção: pode afetar " + (WHATS_OBJ[cat] || cat.toLowerCase()) + "*"
               : "📌 *Tema: " + cat.toLowerCase() + "*";
-  const sv = situacaoVotos(v);
-  const placar = sv ? "\n📊 Placar agora: Sim " + fmtNum(sv.sim) + " × Não " + fmtNum(sv.nao) : "";
-  const msg = "🚨 *Consulta pública aberta: vote em um minuto*\n" + sinal + placar + "\n\n" + txt +
+  let placar = "";
+  if(sv){
+    const a = fmtNum(sv.sim), b = fmtNum(sv.nao);
+    placar = "\n\n📊 Placar agora: Sim " + (sv.sim>sv.nao ? "*"+a+"*" : a) + " × Não " + (sv.nao>sv.sim ? "*"+b+"*" : b);
+  }
+  const msg = "🚨 *Consulta pública aberta: vote em um minuto*\n" + sinal + "\n\n" + txt + placar +
     "\n\n👉 Vote aqui: " + v.link + "\n\ntocaia.eco.br";
   return "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
 }
