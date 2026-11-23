@@ -1107,8 +1107,8 @@ footer .rodape-contato>.canais{grid-column:2;grid-row:1/span 3;padding-top:8px}}
         <input name="email" type="email" placeholder="Seu e-mail" required maxlength="150">
         <div class="mais-op"><button type="button" class="mais-sum" onclick="var o=this.parentElement;o.classList.toggle('aberto');this.querySelector('span').textContent=o.classList.contains('aberto')?'–':'+'">personalizar: escolher temas <span>+</span></button><div class="mais-corpo">
         <div class="op-opts"><p class="rotulo">Com que frequência</p>
-        <label><input type="radio" name="freq" value="diaria" checked> Todo dia (só quando houver novidade)</label>
-        <label><input type="radio" name="freq" value="semanal"> Uma vez por semana, às segundas (resumo da semana)</label>
+        <label><input type="radio" name="freq" value="semanal" checked> Uma vez por semana, às segundas (resumo da semana) · <b>recomendado</b></label>
+        <label><input type="radio" name="freq" value="diaria"> Todo dia (só quando houver novidade)</label>
         <p class="rotulo">O que você quer receber</p>
         <label><input type="checkbox" name="leis" checked> Projetos de lei que mexeram</label>
         <label><input type="checkbox" name="consultas" checked> Consultas públicas abertas</label>
@@ -1597,7 +1597,7 @@ function enviarFormAvisos(ev){
   if(!f.leis.checked && !f.consultas.checked){ msg.textContent = "Marque pelo menos uma opção: projetos de lei ou consultas públicas."; return false; }
   const temas = Array.from(f.querySelectorAll('input[name="tema"]:checked')).map(i=>i.value);
   const zap = "";
-      enviarFormulario("assinar", {email:f.email.value, whatsapp:zap, consentimentoWhats:false, freq:(f.freq&&f.freq.value)||"diaria", leis:f.leis.checked, consultas:f.consultas.checked, temas:temas, consentimento:f.consentimento.checked, site:f.site.value},
+      enviarFormulario("assinar", {email:f.email.value, whatsapp:zap, consentimentoWhats:false, freq:(f.freq&&f.freq.value)||"semanal", leis:f.leis.checked, consultas:f.consultas.checked, temas:temas, consentimento:f.consentimento.checked, site:f.site.value},
     f.querySelector("button"), msg, "Pronto. Agora o Congresso não passa mais batido. Você vai receber um e-mail de boas-vindas (se não chegar, olhe o spam).").then(ok=>{ if(ok) f.reset(); });
   return false;
 }
