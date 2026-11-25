@@ -951,7 +951,7 @@ footer .rodape-contato>.canais{grid-column:2;grid-row:1/span 3;padding-top:8px}}
 .prog-g{font-size:12px;color:#5a5648;margin:0 0 12px}
 .faixa-retro{background:#eef2ff;border:2px solid #003399;color:#0b1f5c;border-radius:8px;padding:8px 10px;margin:6px 0 8px;font-size:12.5px;line-height:1.45}
 .faixa-retro span{color:#33406b}
-.faixa-retro ul{margin:4px 0 6px;padding-left:18px}.faixa-retro li{margin:2px 0}
+.faixa-ok{background:#eaf7ec;border-color:#1a7a2e;color:#0f3d19;margin-bottom:0}.faixa-ok span{color:#2d5a38}.faixa-retro ul{margin:4px 0 6px;padding-left:18px}.faixa-retro li{margin:2px 0}
 </style>
 </head>
 <body>
@@ -1225,7 +1225,7 @@ function normalizarLinhaCamara(row){
     situacao: row["Status atual"] || "Não informado",
     data: row["Data da movimentação"] || row["Atualizado em"] || "",
     link: row["Link"] || "#",
-    casa: "Câmara", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim()
+    casa: "Câmara", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim(), av: String(row["Ponto de avanço"]||"").trim()
   };
 }
 function normalizarLinhaSenado(row){
@@ -1236,7 +1236,7 @@ function normalizarLinhaSenado(row){
     situacao: row["Status atual"] || "Não informado",
     data: row["Data da situação"] || row["Atualizado em"] || "",
     link: row["Link"] || "#",
-    casa: "Senado", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim()
+    casa: "Senado", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim(), av: String(row["Ponto de avanço"]||"").trim()
   };
 }
 
@@ -1246,7 +1246,7 @@ function normalizarLinhaECidadania(row){
     ementa: row["Ementa"] || "Sem ementa",
     categoria: row["Categoria"] || "Outros",
     link: row["Link"] || "#",
-    status: row["Status"] || "", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim(),
+    status: row["Status"] || "", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim(), av: String(row["Ponto de avanço"]||"").trim(),
     sim: numVotos(row["Votos Sim"]), nao: numVotos(row["Votos Não"])
   };
 }
@@ -1573,7 +1573,7 @@ function marcarMista(o){
   if(o && o.ret && o.nivel && o.nivel!=="Retrocesso" && o.nivel!=="Fora do tema"){ o.nivelOriginal = o.nivel; o.nivel = "Retrocesso"; o.mista = true; }
   return o;
 }
-function nivelBadgeX(x){ return x && x.mista ? `<span class="nivel nivel-retro">${NIVEIS["Retrocesso"][0]} Contém retrocesso</span> ` : nivelBadge(x.nivel); }
+function nivelBadgeX(x){ return x && x.mista ? `<span class="nivel nivel-retro">${NIVEIS["Retrocesso"][0]} ${x.av ? 'Avanço, com retrocesso' : 'Contém retrocesso'}</span> ` : nivelBadge(x.nivel); }
 // Projeto já votado no Senado que segue para a sanção (a situação vem da planilha do Senado).
 function emSancao(x){
   if(!x) return false;
@@ -1590,8 +1590,11 @@ function faixaRetro(x){
     const txt = k>-1 ? t.slice(k+1).trim().replace(/[.;\s]+$/,"") : "";
     return '<li><b>' + esc(disp) + '</b>' + (txt ? ': <span>' + esc(txt) + '.</span>' : '') + '</li>';
   }).join("");
-  const pedido = emSancao(x) ? "Peça à Presidência da República o veto desse trecho." : "Peça a retirada ou o veto desse trecho.";
-  return '<div class="faixa-retro">⚠ <b>Contém retrocesso:</b><ul>' + itens + '</ul>' + pedido + '</div>';
+  const avancos = String(x.av||"").split(" | ").map(t=>t.trim().replace(/[.;\s]+$/,"")).filter(Boolean);
+  const verde = avancos.length ? '<div class="faixa-retro faixa-ok">✔ <b>O que avança:</b> <span>' + esc(avancos.join("; ")) + '.</span></div>' : "";
+  const veto = emSancao(x) ? "peça à Presidência da República o veto " + (avancos.length ? "só " : "") + "desse trecho." : "peça a retirada ou o veto " + (avancos.length ? "só " : "") + "desse trecho.";
+  const pedido = avancos.length ? "Apoie o avanço e " + veto : veto.charAt(0).toUpperCase() + veto.slice(1);
+  return verde + '<div class="faixa-retro">⚠ <b>' + (avancos.length ? 'Mas contém retrocesso' : 'Contém retrocesso') + ':</b><ul>' + itens + '</ul>' + pedido + '</div>';
 }
 function notaIA(x){
   if(!x.resumo) return "";
