@@ -1579,7 +1579,7 @@ function faixaRetro(x){
   if(!x || !x.mista) return "";
   const pontos = String(x.ret).split(" | ").map(t=>t.trim()).filter(Boolean);
   const disp = pontos.map(t=>t.split(":")[0].trim()).join("; ");
-  return '<div class="faixa-retro">⚠ <b>Contém retrocesso:</b> ' + esc(disp) + '. <span>' + esc(pontos[0].indexOf(":")>-1 ? pontos[0].slice(pontos[0].indexOf(":")+1).trim().replace(/[.;\s]+$/,"") + "." : "") + '</span> Peça a retirada ou o veto desse trecho.</div>';
+  return '<div class="faixa-retro">⚠ <b>Contém retrocesso:</b> ' + esc(disp) + '. <span>' + esc(pontos[0].indexOf(":")>-1 ? pontos[0].slice(pontos[0].indexOf(":")+1).trim().replace(/[.;\s]+$/,"") + "." : "") + '</span> ' + (/sanção/i.test((x.situacao||"")+" "+(x.status||"")) ? "Peça à Presidência da República o veto desse trecho." : "Peça a retirada ou o veto desse trecho.") + '</div>';
 }
 function notaIA(x){
   if(!x.resumo) return "";
@@ -1818,7 +1818,7 @@ function acoesOpine(d){
       l.push({rotulo:"Opinar na enquete da Câmara", url:"https://www.camara.leg.br/enquetes/" + m[1], cls:"camara"});
   }
   const e = MAPA_ECID[chaveProjeto(d.projeto)];
-  if(e) l.push({rotulo:"Votar na consulta do Senado", url:e, cls:"senado"});
+  if(e && !/sanção/i.test(d.situacao||"")) l.push({rotulo:"Votar na consulta do Senado", url:e, cls:"senado"});
   return l.length ? '<div class="lei-acoes">' + l.map(x => '<a class="opine-btn ' + x.cls + '" href="' + x.url + '" target="_blank" rel="noopener">' + x.rotulo + '</a>').join("") + '</div>' : "";
 }
 let limiteLeis = 24;
