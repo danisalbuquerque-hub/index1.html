@@ -1506,15 +1506,12 @@ function engMeta(v){
   const meta = ENG_MARCOS.find(m => m > s.tot); if(!meta) return "";
   const pct = Math.max(2, Math.min(100, Math.round(s.tot/meta*100)));
   const c = ENG_TOT && ENG_TOT.c && ENG_TOT.c[engChave(v)];
-  const j = c ? c[1] : 0;
+  const j = c ? c[0] : 0;
   return '<div class="meta-col"><div class="meta-t"><b>Meta coletiva: ' + fmtNum(meta) + ' votos</b><span>faltam ' + fmtNum(meta - s.tot) + '</span></div>' +
     '<div class="meta-b"><i style="width:' + pct + '%"></i></div></div>' +
-    (j>=3 ? '<div class="meta-j">' + engPl(j, "pessoa disse que votou", "pessoas disseram que votaram") + ' por aqui (autodeclarado)</div>' : '');
+    (j>=3 ? '<div class="meta-j">' + engPl(j, "pessoa abriu", "pessoas abriram") + ' a página de votação por aqui</div>' : '');
 }
-function engBotaoJa(v){
-  const feito = !!ENG_ST.votei[engChave(v)];
-  return '<button type="button" class="ja-btn"' + (feito ? ' disabled' : '') + ' title="Conta de forma anônima, só para medir a participação">' + (feito ? '✓ Registrado' : '✓ Já votei') + '</button>';
-}
+function engBotaoJa(v){ return ""; }
 function engClique(tipo, card){
   const k = card.getAttribute("data-k"), tema = card.getAttribute("data-tema") || "";
   if(!k) return;
@@ -1538,14 +1535,14 @@ function engRenderPainel(){
     if(rede>=10) selos.push("Rede mobilizada");
     if(seq>=3) selos.push("Sequência de " + seq + " semanas");
     h += '<div class="prog"><div class="prog-t">seu progresso</div>' +
-      '<div class="prog-l">Você abriu <b>' + engPl(nAbriu, "consulta", "consultas") + '</b>' + (nVotei ? ' · disse que votou em <b>' + nVotei + '</b>' : '') + (seq>=2 ? ' · sequência de <b>' + seq + ' semanas</b>' : '') + '</div>' +
+      '<div class="prog-l">Você abriu <b>' + engPl(nAbriu, "consulta", "consultas") + '</b>' + (seq>=2 ? ' · sequência de <b>' + seq + ' semanas</b>' : '') + '</div>' +
       ((ENG_ST.comp>0 || rede>0) ? (rede>0 ? '<div class="prog-l">Sua rede trouxe <b>' + engPl(rede, "pessoa", "pessoas") + '</b> para a tocaia</div>' : '<div class="prog-l">Sua rede ainda não trouxe ninguém. Quanto mais gente compartilhar, mais forte a meta coletiva.</div>') : '') +
       (selos.length ? '<div class="selos-p">' + selos.map(x=>'<span class="selo-p">' + x + '</span>').join("") + '</div>' : '') +
       '<div class="prog-n">Guardado só neste navegador, sem conta. Os números são autodeclarados ou estimados. <a href="#" onclick="return engApagar()">apagar meus dados</a></div></div>';
   }
   const g = ENG_TOT && ENG_TOT.g;
   if(g && (g.votar + g.jaVotei + g.compartilhar + g.visitas) > 0){
-    h += '<div class="prog-g">Somando todo mundo: ' + fmtNum(g.votar) + ' cliques em votar · ' + engPl(g.jaVotei, "pessoa disse que votou", "pessoas disseram que votaram") + ' · ' + engPl(g.visitas, "pessoa chegou", "pessoas chegaram") + ' por links compartilhados (estimativas)</div>';
+    h += '<div class="prog-g">Somando todo mundo: ' + fmtNum(g.votar) + ' cliques em votar · ' + engPl(g.compartilhar, "compartilhamento", "compartilhamentos") + ' · ' + engPl(g.visitas, "pessoa chegou", "pessoas chegaram") + ' por links compartilhados (estimativas)</div>';
   }
   el.innerHTML = h;
 }
