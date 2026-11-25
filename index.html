@@ -948,6 +948,8 @@ footer .rodape-contato>.canais{grid-column:2;grid-row:1/span 3;padding-top:8px}}
 .selos-p{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.selo-p{border:2px solid var(--mostarda);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--mostarda)}
 .prog-n{font-size:11px;color:#bdb8a8;margin-top:10px}.prog-n a{color:#fff;text-decoration:underline}
 .prog-g{font-size:12px;color:#5a5648;margin:0 0 12px}
+.faixa-retro{background:#eef2ff;border:2px solid #003399;color:#0b1f5c;border-radius:8px;padding:8px 10px;margin:6px 0 8px;font-size:12.5px;line-height:1.45}
+.faixa-retro span{color:#33406b}
 </style>
 </head>
 <body>
@@ -1221,7 +1223,7 @@ function normalizarLinhaCamara(row){
     situacao: row["Status atual"] || "Não informado",
     data: row["Data da movimentação"] || row["Atualizado em"] || "",
     link: row["Link"] || "#",
-    casa: "Câmara", nivel: row["Nível"] || "", resumo: row["Resumo"] || ""
+    casa: "Câmara", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim()
   };
 }
 function normalizarLinhaSenado(row){
@@ -1232,7 +1234,7 @@ function normalizarLinhaSenado(row){
     situacao: row["Status atual"] || "Não informado",
     data: row["Data da situação"] || row["Atualizado em"] || "",
     link: row["Link"] || "#",
-    casa: "Senado", nivel: row["Nível"] || "", resumo: row["Resumo"] || ""
+    casa: "Senado", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim()
   };
 }
 
@@ -1242,7 +1244,7 @@ function normalizarLinhaECidadania(row){
     ementa: row["Ementa"] || "Sem ementa",
     categoria: row["Categoria"] || "Outros",
     link: row["Link"] || "#",
-    status: row["Status"] || "", nivel: row["Nível"] || "", resumo: row["Resumo"] || "",
+    status: row["Status"] || "", nivel: row["Nível"] || "", resumo: row["Resumo"] || "", rev: /^(sim|s|x)$/i.test(String(row["Revisado"]||"").trim()), lido: /^\d{4}-/.test(String(row["Texto lido em"]||"").trim()), ret: String(row["Ponto de retrocesso"]||"").trim(),
     sim: numVotos(row["Votos Sim"]), nao: numVotos(row["Votos Não"])
   };
 }
@@ -1274,7 +1276,7 @@ function buscarCSV(url, normalizador){
     if(!url || url.startsWith("COLE_AQUI")){ resolve([]); return; }
     Papa.parse(url, {
       download:true, header:true, skipEmptyLines:true,
-      complete: (res)=> resolve(res.data.filter(r=>String(r["Nível"]||"").trim()!=="Fora do tema").map(normalizador)),
+      complete: (res)=> resolve(res.data.filter(r=>String(r["Nível"]||"").trim()!=="Fora do tema").map(r=>marcarMista(normalizador(r)))),
       error: ()=> resolve([])
     });
   });
@@ -1438,6 +1440,7 @@ function linkWhats(v){
   if(sv && sv.estado==="risco") sinal = "🔴 *" + Su + " " + ve + " perdendo na votação*";
   else if(sv && sv.estado==="disputa") sinal = "🟡 *Votação apertada para " + su[0] + "*";
   else if(sv && sv.estado==="vantagem") sinal = "🟢 *" + Su + " " + ve + " ganhando na votação*";
+  else if(v.mista) sinal = "⚠️ *Contém ponto de retrocesso: " + String(v.ret).split(" | ").map(t=>t.split(":")[0].trim()).join("; ") + "*"
   else sinal = v.nivel==="Retrocesso" ? "⚠️ *Possível retrocesso " + para + "*"
               : v.nivel==="Avanço" ? "✅ *Possível avanço " + para + "*"
               : v.nivel==="Atenção" ? "👀 *Atenção: pode afetar " + (WHATS_OBJ[cat] || cat.toLowerCase()) + "*"
@@ -1459,7 +1462,7 @@ function situacaoVotos(v){
   if(v.sim==null || v.nao==null) return null;
   const tot = v.sim + v.nao; if(tot<=0) return null;
   const pSim = v.sim/tot*100, r = {tot:tot, sim:v.sim, nao:v.nao, pSim:pSim};
-  if(v.nivel!=="Avanço" && v.nivel!=="Retrocesso") return r;
+  if((v.nivel!=="Avanço" && v.nivel!=="Retrocesso") || v.mista) return r;
   if(tot<50){ r.poucos = true; return r; }
   const meu = v.nivel==="Avanço" ? pSim : 100-pSim;
   r.estado = meu<45 ? "risco" : (meu<=55 ? "disputa" : "vantagem");
@@ -1565,6 +1568,28 @@ function engInit(){
   engRenderPainel();
 }
 
+// "Contém retrocesso": projeto com ponto que enfraquece a proteção (achado na leitura do texto completo).
+// Para filtros, números e alertas ele conta como Retrocesso; o selo e a faixa mostram o que é de fato.
+function marcarMista(o){
+  if(o && o.ret && o.nivel && o.nivel!=="Retrocesso" && o.nivel!=="Fora do tema"){ o.nivelOriginal = o.nivel; o.nivel = "Retrocesso"; o.mista = true; }
+  return o;
+}
+function nivelBadgeX(x){ return x && x.mista ? `<span class="nivel nivel-retro">${NIVEIS["Retrocesso"][0]} Contém retrocesso</span> ` : nivelBadge(x.nivel); }
+function faixaRetro(x){
+  if(!x || !x.mista) return "";
+  const pontos = String(x.ret).split(" | ").map(t=>t.trim()).filter(Boolean);
+  const disp = pontos.map(t=>t.split(":")[0].trim()).join("; ");
+  return '<div class="faixa-retro">⚠ <b>Contém retrocesso:</b> ' + esc(disp) + '. <span>' + esc(pontos[0].indexOf(":")>-1 ? pontos[0].slice(pontos[0].indexOf(":")+1).trim().replace(/[.;\s]+$/,"") + "." : "") + '</span> Peça a retirada ou o veto desse trecho.</div>';
+}
+function notaIA(x){
+  if(!x.resumo) return "";
+  return faixaRetro(x) + notaIABase_(x);
+}
+function notaIABase_(x){
+  if(x.rev) return '<div class="ia-nota">revisado pela equipe da tocaia</div>';
+  if(x.lido) return '<div class="ia-nota">resumo feito por IA a partir do texto completo, ainda não revisado</div>';
+  return '<div class="ia-nota">resumo e nível feitos por IA, ainda não revisados</div>';
+}
 function blocoPlacar(v){
   const s = situacaoVotos(v);
   if(!s) return {pill:"", barra:"", btn:"Votar agora →"};
@@ -1602,9 +1627,9 @@ function montarVotacaoPopular(){
   }
   el.innerHTML = lista.map(v => { const pl = blocoPlacar(v); return `
     <div class="votacao-card" data-k="${engChave(v)}" data-tema="${esc(NOME_TEMA[v.categoria]||v.categoria)}">
-      <span class="badge-cat" style="${catEstilo(v.categoria)}">${v.categoria}</span> ${nivelBadge(v.nivel)}${pl.pill}
+      <span class="badge-cat" style="${catEstilo(v.categoria)}">${v.categoria}</span> ${nivelBadgeX(v)}${pl.pill}
       <div class="proj" style="margin-top:8px;">${v.projeto}</div>
-      <div class="ementa">${v.resumo ? esc(v.resumo) : v.ementa}</div>${v.resumo ? '<div class="ia-nota">resumo feito por IA</div>' : ''}${pl.barra}${engMeta(v)}
+      <div class="ementa">${v.resumo ? esc(v.resumo) : v.ementa}</div>${notaIA(v)}${pl.barra}${engMeta(v)}
       <div class="acoes"><a class="votar-btn" href="${v.link}" target="_blank" rel="noopener">${pl.btn}</a><a class="whats-btn" href="${linkWhats(v)}" target="_blank" rel="noopener"><svg class="zap-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp</a>${engBotaoJa(v)}</div>
       <div class="apos-voto">votou? <a href="#avisos" onclick="return irAvisos(event)">receba a próxima consulta por e-mail</a></div>
     </div>`; }).join("");
@@ -1631,10 +1656,10 @@ function montarRadar(){
   const recentes = [...DADOS].sort((a,b)=>a.dias-b.dias).slice(0,6);
   document.getElementById("radar").innerHTML = recentes.map(d=>`
     <div class="rcard">
-      <div class="rc-topo"><span class="tag">há ${d.dias} dia${d.dias===1?'':'s'}</span><span class="casa-txt">${d.casa}</span>${d.nivel ? '<span class="topo-nivel">' + nivelBadge(d.nivel) + '</span>' : ''}</div>
+      <div class="rc-topo"><span class="tag">há ${d.dias} dia${d.dias===1?'':'s'}</span><span class="casa-txt">${d.casa}</span>${d.nivel ? '<span class="topo-nivel">' + nivelBadgeX(d) + '</span>' : ''}</div>
       <div class="proj">${d.projeto}</div>
       <div class="ementa">${esc(d.resumo || d.ementa)}</div>
-      ${d.resumo ? '<div class="ia-nota">resumo feito por IA</div>' : ''}
+      ${notaIA(d)}
       <div class="dias">${esc(d.situacao)} · ${fmtData(d.data)}</div>
       <a class="abrir" href="${d.link}" target="_blank" rel="noopener">Ver tramitação →</a>
     </div>`).join("");
@@ -1741,9 +1766,9 @@ function montarViraramLei(){
   if(!lista.length){ el.innerHTML = '<p style="font-size:13px;color:#7a755f;">Nenhum projeto monitorado nessa etapa por enquanto.</p>'; return; }
   el.innerHTML = lista.map(d => `
     <div class="votacao-card">
-      <span class="badge-cat" style="${catEstilo(d.categoria)}">${d.categoria}</span> ${nivelBadge(d.nivel)}
+      <span class="badge-cat" style="${catEstilo(d.categoria)}">${d.categoria}</span> ${nivelBadgeX(d)}
       <div class="proj" style="margin-top:8px;">${d.projeto} <span class="badge-casa ${d.casa}">${d.casa}</span></div>
-      <div class="ementa">${d.resumo ? esc(d.resumo) : d.ementa}</div>${d.resumo ? '<div class="ia-nota">resumo feito por IA</div>' : ''}
+      <div class="ementa">${d.resumo ? esc(d.resumo) : d.ementa}</div>${notaIA(d)}
       <div class="ementa" style="-webkit-line-clamp:unset;"><b>Situação:</b> ${esc(d.situacao)}</div>
       <a class="votar-btn" href="${d.link}" target="_blank" rel="noopener">Ver tramitação →</a>
     </div>`).join("");
@@ -1767,7 +1792,7 @@ function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").rep
 function nivelBadge(n){ const x = NIVEIS[n]; return x ? `<span class="nivel nivel-${x[1]}">${x[0]} ${n}</span> ` : ""; }
 function resumoBloco(d){
   if(!d.resumo) return "";
-  return `<div><button class="resumo-btn" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden">ler resumo (IA)</button><div class="resumo-box" hidden>${esc(d.resumo)}<small>Resumo e classificação gerados por IA a partir da ementa. Podem conter erros: confira o texto oficial.</small></div></div>`;
+  return faixaRetro(d) + `<div><button class="resumo-btn" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden">ler resumo (IA)</button><div class="resumo-box" hidden>${esc(d.resumo)}<small>Resumo e classificação gerados por IA a partir da ementa. Podem conter erros: confira o texto oficial.</small></div></div>`;
 }
 let filtroNivel = "Todos";
 function chipsNivel(id, atual, fn, lista){
@@ -1813,10 +1838,10 @@ function montarTabela(){
   document.getElementById("maisLeis").style.display = linhas.length > limiteLeis ? "inline-block" : "none";
   document.getElementById("leisGrid").innerHTML = linhas.slice(0, limiteLeis).map(d => `
     <article class="lei ${d.dias<=10 ? 'recente' : ''}">${d.dias<=10 ? '<span class="etq-novo">' + (d.dias===0?'hoje':d.dias===1?'ontem':'há '+d.dias+' dias') + '</span>' : ''}
-      <div class="lei-topo"><span class="badge-cat" style="${catEstilo(d.categoria)}">${d.categoria}</span><span class="casa-txt">${d.casa}</span><span class="topo-nivel">${nivelBadge(d.nivel)}</span></div>
+      <div class="lei-topo"><span class="badge-cat" style="${catEstilo(d.categoria)}">${d.categoria}</span><span class="casa-txt">${d.casa}</span><span class="topo-nivel">${nivelBadgeX(d)}</span></div>
       <h3 class="lei-proj"><a href="${d.link}" target="_blank" rel="noopener">${d.projeto}</a></h3>
       <p class="lei-texto">${esc(d.resumo || d.ementa)}</p>
-      ${d.resumo ? '<div class="ia-nota">resumo feito por IA</div>' : ''}
+      ${notaIA(d)}
       ${acoesOpine(d)}
       <div class="lei-rodape"><span>${esc(d.situacao)}</span><span class="lei-dias">${(d.dias<999 && d.dias>10) ? 'há '+d.dias+' d' : ''}</span></div>
     </article>`).join("") || '<p class="carregando">Nada por aqui. Desconfie.</p>';
