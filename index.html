@@ -935,6 +935,19 @@ footer .rodape-faq a:hover{color:#E5FE00}
 footer .rodape-contato>h4,footer .rodape-contato>p,footer .rodape-contato>.contato-form{grid-column:1}
 footer .rodape-contato>.canais{grid-column:2;grid-row:1/span 3;padding-top:8px}}
 @media(max-width:900px){.canais{margin-top:22px}}
+
+/* participação: meta coletiva, já votei, progresso */
+.meta-col{margin:2px 0 10px}.meta-t{display:flex;justify-content:space-between;gap:8px;font-size:12px;flex-wrap:wrap}
+.meta-b{height:10px;border:2px solid var(--tinta);border-radius:6px;overflow:hidden;background:#fff;margin-top:4px}.meta-b i{display:block;height:100%;background:var(--tinta)}
+.meta-j{font-size:11.5px;color:#5a5648;margin:-4px 0 10px}
+.ja-btn{display:inline-block;background:var(--branco);color:var(--tinta);font-weight:700;font-size:12.5px;padding:8px 16px;border:2px solid var(--tinta);border-radius:6px;box-shadow:2px 2px 0 var(--tinta);cursor:pointer;font-family:var(--hel)}
+.ja-btn[disabled]{opacity:.65;cursor:default;box-shadow:none}
+.prog{background:var(--preto);color:#fff;border-radius:10px;padding:14px 16px;margin:0 0 12px}
+.prog-t{color:var(--mostarda);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.prog-l{font-size:14px;line-height:1.5}.prog-l b{color:var(--mostarda)}
+.selos-p{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.selo-p{border:2px solid var(--mostarda);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:var(--mostarda)}
+.prog-n{font-size:11px;color:#bdb8a8;margin-top:10px}.prog-n a{color:#fff;text-decoration:underline}
+.prog-g{font-size:12px;color:#5a5648;margin:0 0 12px}
 </style>
 </head>
 <body>
@@ -1070,6 +1083,7 @@ footer .rodape-contato>.canais{grid-column:2;grid-row:1/span 3;padding-top:8px}}
         <a class="fv-cta" href="#avisos" onclick="return irAvisos(event)">me avise das próximas consultas →</a>
       </div>
       <div class="risco-temas" id="riscoTemas" style="display:none"></div>
+      <div id="meuProgresso"></div>
       <div class="filtros-mini" id="filtrosNivelVot"></div>
       <div class="filtros-mini" id="filtrosVotacao"></div>
       <div class="votacao-grid" id="votacaoPopular"></div>
@@ -1116,7 +1130,7 @@ footer .rodape-contato>.canais{grid-column:2;grid-row:1/span 3;padding-top:8px}}
         <div class="temas-lista"><label><input type="checkbox" name="tema" value="Meio ambiente"> Meio ambiente</label><label><input type="checkbox" name="tema" value="Direitos dos animais"> Direitos dos animais</label><label><input type="checkbox" name="tema" value="Agropecuária"> Agropecuária</label><label><input type="checkbox" name="tema" value="Mineração"> Mineração</label><label><input type="checkbox" name="tema" value="Povos originários"> Povos originários</label><label><input type="checkbox" name="tema" value="Água"> Água</label><label><input type="checkbox" name="tema" value="Crimes ambientais"> Crimes ambientais</label><label><input type="checkbox" name="tema" value="Data centers e tecnologia"> Data centers e tecnologia</label></div></div>
         </div></div>
         <input name="site" class="isca" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <label class="consent"><input type="checkbox" name="consentimento" required> Concordo em receber esses avisos por e-mail. Usamos o seu e-mail só para isso, e você pode sair a qualquer momento pelo link que vai em cada mensagem.</label>
+        <label class="consent"><input type="checkbox" name="consentimento" required> Concordo em receber esses avisos por e-mail. Usamos o seu e-mail só para isso, e você pode sair a qualquer momento pelo link que vai em cada mensagem. <a href="privacidade.html" target="_blank" rel="noopener">Saiba mais sobre privacidade</a>.</label>
         <div class="av-acoes"><button type="submit">me avise antes que passe</button></div>
         <p class="form-msg" id="msgAvisos"></p>
       </form>
@@ -1154,7 +1168,7 @@ footer .rodape-contato>.canais{grid-column:2;grid-row:1/span 3;padding-top:8px}}
         <a href="https://whatsapp.com/channel/0029Vb9fSnwDp2QHF49Z6M24" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.5 1 2.7s1.8 2.8 4.4 3.9c1.6.7 2.3.7 3.1.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.5-.4z"/></svg><span><b>canal no WhatsApp</b>receba os alertas por lá</span></a>
       </div>
   </div>
-  <div class="rodape-fim"><span>tocaia · 2026</span><a href="https://github.com/danisalbuquerque-hub/index1.html" target="_blank" rel="noopener">código aberto</a></div>
+  <div class="rodape-fim"><span>tocaia · 2026</span><a href="privacidade.html">privacidade</a><a href="https://github.com/danisalbuquerque-hub/index1.html" target="_blank" rel="noopener">código aberto</a></div>
 </footer>
 
 <script>
@@ -1434,7 +1448,7 @@ function linkWhats(v){
     placar = "\n\n📊 Placar agora: Sim " + (sv.sim>sv.nao ? "*"+a+"*" : a) + " × Não " + (sv.nao>sv.sim ? "*"+b+"*" : b);
   }
   const msg = "🚨 *Consulta pública aberta: vote em um minuto*\n" + sinal + "\n\n" + txt + placar +
-    "\n\n👉 Vote aqui: " + v.link + "\n\ntocaia.eco.br";
+    "\n\n👉 Vote aqui: " + v.link + "\n\ntocaia.eco.br/?r=" + ENG_ST.code;
   return "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
 }
 
@@ -1456,6 +1470,101 @@ function diasDoProjeto(v){
   if(!_diasProj){ _diasProj = {}; DADOS.forEach(d=>{ _diasProj[chaveProjeto(d.projeto)] = d.dias; }); }
   const x = _diasProj[chaveProjeto(v.projeto)]; return x==null ? null : x;
 }
+// ===== Participação: contagens anônimas, sem conta e sem dados pessoais =====
+// O navegador guarda um código aleatório e o histórico do próprio visitante. O servidor só soma números.
+const ENG_LS = "tocaia_eng_v1";
+let ENG_TOT = null, ENG_REDE = null;
+function engNovoCodigo(){ const a="abcdefghijklmnopqrstuvwxyz0123456789"; let s=""; try{ const r=new Uint8Array(8); crypto.getRandomValues(r); r.forEach(x=>{s+=a[x%36];}); }catch(e){ for(let i=0;i<8;i++) s+=a[Math.floor(Math.random()*36)]; } return s; }
+function engLer(){
+  let o = {};
+  try{ o = JSON.parse(localStorage.getItem(ENG_LS)||"{}") || {}; }catch(e){ o = {}; }
+  o.code = /^[a-z0-9]{4,12}$/.test(o.code||"") ? o.code : engNovoCodigo();
+  o.abriu = o.abriu||{}; o.votei = o.votei||{}; o.sem = o.sem||[]; o.visto = o.visto||{}; o.comp = o.comp||0;
+  return o;
+}
+const ENG_ST = engLer();
+function engSalvar(){ try{ localStorage.setItem(ENG_LS, JSON.stringify(ENG_ST)); }catch(e){} }
+function engChave(v){ let h=5381; const t=String(v.link||v.projeto||""); for(let i=0;i<t.length;i++){ h=((h<<5)+h+t.charCodeAt(i))|0; } return (h>>>0).toString(36).slice(0,10); }
+function engEnviar(o){
+  if(!FORM_URL) return;
+  try{ fetch(FORM_URL, {method:"POST", mode:"no-cors", keepalive:true, headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify(Object.assign({tipo:"evento"}, o))}).catch(()=>{}); }catch(e){}
+}
+function engSemana(){ return Math.floor((Date.now() + 3*864e5) / (7*864e5)); }
+function engMarcarSemana(){ const w = engSemana(); if(ENG_ST.sem.indexOf(w)===-1){ ENG_ST.sem.push(w); ENG_ST.sem = ENG_ST.sem.slice(-60); } }
+function engSequencia(){
+  const set = new Set(ENG_ST.sem); let w = engSemana(); if(!set.has(w)) w--;
+  let n = 0; while(set.has(w)){ n++; w--; } return n;
+}
+function engPl(n, a, b){ return n + " " + (n===1 ? a : b); }
+const ENG_MARCOS = [100,250,500,1000,2500,5000,10000,25000,50000,100000,250000,500000,1000000];
+function engMeta(v){
+  const s = situacaoVotos(v); if(!s) return "";
+  const meta = ENG_MARCOS.find(m => m > s.tot); if(!meta) return "";
+  const pct = Math.max(2, Math.min(100, Math.round(s.tot/meta*100)));
+  const c = ENG_TOT && ENG_TOT.c && ENG_TOT.c[engChave(v)];
+  const j = c ? c[1] : 0;
+  return '<div class="meta-col"><div class="meta-t"><b>Meta coletiva: ' + fmtNum(meta) + ' votos</b><span>faltam ' + fmtNum(meta - s.tot) + '</span></div>' +
+    '<div class="meta-b"><i style="width:' + pct + '%"></i></div></div>' +
+    (j>=3 ? '<div class="meta-j">' + engPl(j, "pessoa disse que votou", "pessoas disseram que votaram") + ' por aqui (autodeclarado)</div>' : '');
+}
+function engBotaoJa(v){
+  const feito = !!ENG_ST.votei[engChave(v)];
+  return '<button type="button" class="ja-btn"' + (feito ? ' disabled' : '') + ' title="Conta de forma anônima, só para medir a participação">' + (feito ? '✓ Registrado' : '✓ Já votei') + '</button>';
+}
+function engClique(tipo, card){
+  const k = card.getAttribute("data-k"), tema = card.getAttribute("data-tema") || "";
+  if(!k) return;
+  if(tipo==="votar"){ ENG_ST.abriu[k] = tema; }
+  if(tipo==="jaVotei"){ if(ENG_ST.votei[k]) return; ENG_ST.votei[k] = tema; ENG_ST.abriu[k] = tema; const b = card.querySelector(".ja-btn"); if(b){ b.disabled = true; b.textContent = "✓ Registrado"; } }
+  if(tipo==="compartilhar"){ ENG_ST.comp = (ENG_ST.comp||0) + 1; }
+  engMarcarSemana(); engSalvar(); engEnviar({ev:tipo, c:k}); engRenderPainel();
+}
+const ENG_SELO_TEMA = {"Proteção animal":"Pela proteção animal","Povos originários":"Pelos povos originários","Meio ambiente":"Pelo meio ambiente","Água":"Pela água","Combate aos crimes ambientais":"Contra os crimes ambientais"};
+function engRenderPainel(){
+  const el = document.getElementById("meuProgresso"); if(!el) return;
+  const todos = Object.assign({}, ENG_ST.abriu, ENG_ST.votei);
+  const nAbriu = Object.keys(todos).length, nVotei = Object.keys(ENG_ST.votei).length, seq = engSequencia();
+  const rede = ENG_REDE || 0;
+  let h = "";
+  if(nAbriu>0 || ENG_ST.comp>0){
+    const porTema = {}; Object.keys(todos).forEach(k=>{ porTema[todos[k]] = (porTema[todos[k]]||0) + 1; });
+    const selos = [];
+    if(nAbriu>=1) selos.push("Primeira participação");
+    Object.keys(ENG_SELO_TEMA).forEach(t=>{ if((porTema[t]||0)>=3) selos.push(ENG_SELO_TEMA[t]); });
+    if(rede>=10) selos.push("Rede mobilizada");
+    if(seq>=3) selos.push("Sequência de " + seq + " semanas");
+    h += '<div class="prog"><div class="prog-t">seu progresso</div>' +
+      '<div class="prog-l">Você abriu <b>' + engPl(nAbriu, "consulta", "consultas") + '</b>' + (nVotei ? ' · disse que votou em <b>' + nVotei + '</b>' : '') + (seq>=2 ? ' · sequência de <b>' + seq + ' semanas</b>' : '') + '</div>' +
+      ((ENG_ST.comp>0 || rede>0) ? (rede>0 ? '<div class="prog-l">Sua rede trouxe <b>' + engPl(rede, "pessoa", "pessoas") + '</b> para a tocaia</div>' : '<div class="prog-l">Sua rede ainda não trouxe ninguém. Quanto mais gente compartilhar, mais forte a meta coletiva.</div>') : '') +
+      (selos.length ? '<div class="selos-p">' + selos.map(x=>'<span class="selo-p">' + x + '</span>').join("") + '</div>' : '') +
+      '<div class="prog-n">Guardado só neste navegador, sem conta. Os números são autodeclarados ou estimados. <a href="#" onclick="return engApagar()">apagar meus dados</a></div></div>';
+  }
+  const g = ENG_TOT && ENG_TOT.g;
+  if(g && (g.votar + g.jaVotei + g.compartilhar + g.visitas) > 0){
+    h += '<div class="prog-g">Somando todo mundo: ' + fmtNum(g.votar) + ' cliques em votar · ' + engPl(g.jaVotei, "pessoa disse que votou", "pessoas disseram que votaram") + ' · ' + engPl(g.visitas, "pessoa chegou", "pessoas chegaram") + ' por links compartilhados (estimativas)</div>';
+  }
+  el.innerHTML = h;
+}
+function engApagar(){ try{ localStorage.removeItem(ENG_LS); }catch(e){} ENG_ST.abriu = {}; ENG_ST.votei = {}; ENG_ST.sem = []; ENG_ST.comp = 0; ENG_ST.visto = {}; engRenderPainel(); if(VOTACAO_POPULAR.length) montarVotacaoPopular(); return false; }
+function engInit(){
+  try{
+    const r = (new URLSearchParams(location.search).get("r")||"").toLowerCase();
+    if(/^[a-z0-9]{4,12}$/.test(r) && r!==ENG_ST.code && !ENG_ST.visto[r]){ ENG_ST.visto[r] = 1; engSalvar(); engEnviar({ev:"visita", r:r}); }
+  }catch(e){}
+  const lista = document.getElementById("votacaoPopular");
+  if(lista) lista.addEventListener("click", ev=>{
+    const card = ev.target.closest && ev.target.closest(".votacao-card"); if(!card) return;
+    if(ev.target.closest(".votar-btn")) engClique("votar", card);
+    else if(ev.target.closest(".whats-btn")) engClique("compartilhar", card);
+    else if(ev.target.closest(".ja-btn")) engClique("jaVotei", card);
+  });
+  if(FORM_URL){
+    fetch(FORM_URL + "?acao=totais").then(x=>x.json()).then(j=>{ ENG_TOT = j; if(VOTACAO_POPULAR.length) montarVotacaoPopular(); engRenderPainel(); }).catch(()=>{});
+    if(ENG_ST.comp>0) fetch(FORM_URL + "?acao=rede&r=" + ENG_ST.code).then(x=>x.json()).then(j=>{ ENG_REDE = j.n||0; engRenderPainel(); }).catch(()=>{});
+  }
+  engRenderPainel();
+}
+
 function blocoPlacar(v){
   const s = situacaoVotos(v);
   if(!s) return {pill:"", barra:"", btn:"Votar agora →"};
@@ -1492,11 +1601,11 @@ function montarVotacaoPopular(){
     return;
   }
   el.innerHTML = lista.map(v => { const pl = blocoPlacar(v); return `
-    <div class="votacao-card">
+    <div class="votacao-card" data-k="${engChave(v)}" data-tema="${esc(NOME_TEMA[v.categoria]||v.categoria)}">
       <span class="badge-cat" style="${catEstilo(v.categoria)}">${v.categoria}</span> ${nivelBadge(v.nivel)}${pl.pill}
       <div class="proj" style="margin-top:8px;">${v.projeto}</div>
-      <div class="ementa">${v.resumo ? esc(v.resumo) : v.ementa}</div>${v.resumo ? '<div class="ia-nota">resumo feito por IA</div>' : ''}${pl.barra}
-      <div class="acoes"><a class="votar-btn" href="${v.link}" target="_blank" rel="noopener">${pl.btn}</a><a class="whats-btn" href="${linkWhats(v)}" target="_blank" rel="noopener"><svg class="zap-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp</a></div>
+      <div class="ementa">${v.resumo ? esc(v.resumo) : v.ementa}</div>${v.resumo ? '<div class="ia-nota">resumo feito por IA</div>' : ''}${pl.barra}${engMeta(v)}
+      <div class="acoes"><a class="votar-btn" href="${v.link}" target="_blank" rel="noopener">${pl.btn}</a><a class="whats-btn" href="${linkWhats(v)}" target="_blank" rel="noopener"><svg class="zap-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp</a>${engBotaoJa(v)}</div>
       <div class="apos-voto">votou? <a href="#avisos" onclick="return irAvisos(event)">receba a próxima consulta por e-mail</a></div>
     </div>`; }).join("");
 }
@@ -1717,8 +1826,9 @@ document.getElementById("busca").addEventListener("input", montarTabela);
 document.getElementById("leisGrid").innerHTML = '<p class="carregando">Lendo o Diário Oficial por você...</p>';
 
 carregarDados();
+engInit();
 
-function compartilharConsultas(e){if(e)e.preventDefault();var t="Vote nas consultas públicas abertas sobre meio ambiente: "+location.href.split("#")[0];window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(t),"_blank","noopener");return false;}
+function compartilharConsultas(e){if(e)e.preventDefault();var t="Vote nas consultas públicas abertas sobre meio ambiente: https://tocaia.eco.br/?r="+ENG_ST.code;engEnviar({ev:"compartilhar",c:"geral"});ENG_ST.comp=(ENG_ST.comp||0)+1;engMarcarSemana();engSalvar();engRenderPainel();window.open("https://api.whatsapp.com/send?text="+encodeURIComponent(t),"_blank","noopener");return false;}
 (function(){var o=document.querySelector(".como-selo");if(!o)return;document.querySelectorAll("img[data-selo]").forEach(function(i){i.src=o.src;});})();
 </script>
 <script>
