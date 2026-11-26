@@ -1125,12 +1125,12 @@ footer .rodape-contato>.canais{grid-column:2;grid-row:1/span 3;padding-top:8px}}
   <div id="abaGoverno" style="display:none;">
     <section>
       <div class="trilha">/governo-federal</div><h2 class="secao-titulo">normas em consulta</h2>
-      <p class="secao-sub">Consultas do governo federal (Brasil Participativo) sobre portarias, resoluções, decretos e planos nos nossos temas, abertas para qualquer pessoa enviar contribuições. Não é o Congresso: a decisão final é do órgão responsável.</p>
+      <p class="secao-sub">Consultas do governo federal (Brasil Participativo) sobre portarias, resoluções, decretos e planos nos nossos temas, abertas para qualquer pessoa dar a sua opinião. Não é o Congresso: a decisão final é do órgão responsável.</p>
       <div class="explica explica-curta faixa-votar">
         <img class="fv-selo" data-selo alt="" aria-hidden="true">
         <div class="fv-txt">
           <h3>por que participar</h3>
-          <p>Aqui o governo pede opinião antes de editar a norma. Não há voto nem placar: você envia uma contribuição pelo Brasil Participativo. O órgão pode agrupar e descartar mensagens repetidas, então escreva com as suas palavras e aponte o artigo que quer mudar. O resultado não obriga o governo, mas ele precisa divulgar a análise que fez. <a class="explica-link" href="https://brasilparticipativo.presidencia.gov.br/" target="_blank" rel="noopener">Ir ao Brasil Participativo →</a></p>
+          <p>Aqui o governo pede opinião antes de editar a norma. Não há voto nem placar: você escreve a sua opinião no Brasil Participativo. O órgão pode agrupar e descartar mensagens repetidas, então escreva com as suas palavras e aponte o artigo que quer mudar. O resultado não obriga o governo, mas ele precisa divulgar a análise que fez. <a class="explica-link" href="https://brasilparticipativo.presidencia.gov.br/" target="_blank" rel="noopener">Ir ao Brasil Participativo →</a></p>
         </div>
         <a class="fv-cta" href="#avisos" onclick="return irAvisos(event)">me avise das próximas consultas →</a>
       </div>
@@ -1376,7 +1376,7 @@ function montarGoverno(){
       <span class="badge-cat" style="${catEstilo(v.categoria)}">${v.categoria}</span> ${v.nivel ? nivelBadgeX(v) : ""}${etiquetaPrazo(v)}
       <div class="proj proj-gov" style="margin-top:8px;" role="button" tabindex="0" onclick="this.classList.toggle('aberto')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('aberto')}" title="${esc(v.projeto).replace(/"/g,'&quot;')}">${esc(v.projeto)}</div>
       <div class="ementa">${esc(v.resumo || v.ementa)}</div>${v.resumo ? notaIA(v) : ""}
-      <div class="acoes"><a class="votar-btn" href="${v.link}" target="_blank" rel="noopener">Enviar contribuição →</a><a class="whats-btn" href="${linkWhatsGov(v)}" target="_blank" rel="noopener"><svg class="zap-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp</a></div>
+      <div class="acoes"><a class="votar-btn" href="${v.link}" target="_blank" rel="noopener">Dar minha opinião →</a><a class="whats-btn" href="${linkWhatsGov(v)}" target="_blank" rel="noopener"><svg class="zap-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.2-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>WhatsApp</a></div>
     </div>`).join("");
 }
 let NOTICIAS_DOU = [];
@@ -1570,7 +1570,7 @@ function linkWhatsGov(v){
   const f = dataGov(v.fim), n = diasParaFim(v);
   const prazo = (f && n!==null && n<=365) ? "\n⏳ Prazo: até " + String(f.getDate()).padStart(2,"0") + "/" + String(f.getMonth()+1).padStart(2,"0") + (n===0 ? " (termina hoje)" : n===1 ? " (termina amanhã)" : "") : "";
   const msg = "📣 *O governo federal abriu consulta: dê a sua opinião*\n" + sinal + "\n\n" + tcurto + (txt ? "\n" + txt : "") + prazo +
-    "\n\n👉 Contribua aqui: " + v.link + "\n\ntocaia.eco.br/?r=" + ENG_ST.code;
+    "\n\n👉 Dê a sua opinião aqui: " + v.link + "\n\ntocaia.eco.br/?r=" + ENG_ST.code;
   return "https://api.whatsapp.com/send?text=" + encodeURIComponent(msg);
 }
 
